@@ -1,18 +1,16 @@
 /node_modules
+/public/css/app.css
+/public/css/vendor.css
 /public/hot
+/public/js/app.js
+/public/js/vendor.js
+/public/mix-manifest.json
 /public/storage
 /storage/*.key
 /vendor
 /.idea
 /.vagrant
-Homestead.json
-Homestead.yaml
 npm-debug.log
 .env
 .php_cs.cache
-/public/mix-manifest.json
-/public/css/app.css
-/public/css/vendor.css
-/public/js/app.js
-/public/js/vendor.js
 
