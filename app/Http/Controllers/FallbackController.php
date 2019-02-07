@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class FallbackController extends Controller {
+    public function getAdminFallback() {
+        return 'hi';
+    }
+
     public function getWebFallback(): View {
         return view('main');
     }
