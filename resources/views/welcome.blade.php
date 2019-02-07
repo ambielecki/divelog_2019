@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
+
         <title>Laravel</title>
 
         <!-- Fonts -->
@@ -83,6 +84,9 @@
                 <div class="title m-b-md">
                     Laravel
                 </div>
+                <div id="app">
+                    <example-component></example-component>
+                </div>
 
                 <div class="links">
                     <a href="https://laravel.com/docs">Documentation</a>
@@ -94,5 +98,7 @@
                 </div>
             </div>
         </div>
+        <script src="{{ mix('/js/vendor.js') }}"></script>
+        <script src="{{ mix('/js/app.js') }}"></script>
     </body>
 </html>
