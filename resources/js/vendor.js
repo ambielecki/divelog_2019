@@ -9,5 +9,7 @@ if (token) {
   console.error('CSRF token not found: https://laravel.com/docs/csrf#csrf-x-csrf-token');
 }
 
-window.moment = require('moment');
 window.materialize = require('../libraries/materialize/js/materialize');
+window.moment = require('moment-timezone');
+window.Vue = require('vue');
+window.VueRouter = require('vue-router').default;

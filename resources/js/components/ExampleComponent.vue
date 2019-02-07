@@ -17,7 +17,7 @@
 <script>
     export default {
         mounted() {
-            console.log(moment().format())
+            console.log(moment().format());
         }
     }
 </script>
