@@ -13,7 +13,7 @@
 
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input id="email" type="text">
+                                        <input id="email" name="email" type="text">
                                         <label for="email">Email</label>
                                         @if ($errors->has('email'))
                                             <span class="invalid-feedback" role="alert">
@@ -25,7 +25,7 @@
 
                                 <div class="row">
                                     <div class="input-field col s12">
-                                        <input id="password" type="password" class="validate">
+                                        <input id="password" name="password" type="password" class="validate">
                                         <label for="password">Password</label>
                                         @if ($errors->has('password'))
                                             <span class="invalid-feedback" role="alert">
@@ -37,7 +37,7 @@
 
                                 <div class="row">
                                     <div class="col s12">
-                                        <label for="remember">
+                                        <label>
                                             <input type="checkbox" name="remember">
                                             <span>Remember Me</span>
                                         </label>

@@ -4,4 +4,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let dropdowns = document.querySelectorAll('.dropdown-trigger');
     materialize.Dropdown.init(dropdowns, {});
+
+    let mobile_nav = document.querySelectorAll('.sidenav');
+    materialize.Sidenav.init(mobile_nav, {});
+
+    let collapsible = document.querySelectorAll('.collapsible');
+    materialize.Collapsible.init(collapsible, {});
 });
