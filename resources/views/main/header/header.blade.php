@@ -7,8 +7,10 @@
 
 <ul id="logout_dropdown" class="dropdown-content text-blue">
     <li><a href="{{ route('logout') }}"
-           onclick="event.preventDefault();
-                                   document.getElementById('logout-form').submit();">Log Out</a>
+            onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">
+            Log Out
+        </a>
 
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
             {{ csrf_field() }}
@@ -36,7 +38,6 @@
 </nav>
 
 {{-- Mobile Nav --}}
-
 <ul class="sidenav" id="mobile_nav">
     <li><a href="#">Calculator</a></li>
     <li><a href="#">Dive Log</a></li>
@@ -49,8 +50,9 @@
                     <ul>
                         <li>
                             <a href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                   document.getElementById('logout-form').submit();">Log Out
+                                onclick="event.preventDefault();
+                                document.getElementById('logout-form').submit();">
+                                Log Out
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                 {{ csrf_field() }}
