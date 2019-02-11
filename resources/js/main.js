@@ -10,4 +10,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
     let collapsible = document.querySelectorAll('.collapsible');
     materialize.Collapsible.init(collapsible, {});
+
+    let carousel = document.querySelectorAll('.carousel');
+    console.log(carousel);
+    materialize.Carousel.init(carousel, {
+        fullWidth: true,
+        indicators: true
+    });
 });

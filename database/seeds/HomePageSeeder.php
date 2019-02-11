@@ -10,9 +10,10 @@ class HomePageSeeder extends Seeder {
      * @return void
      */
     public function run() {
-        $page          = new Page();
-        $page->title   = 'Dive Log Repeat - Home';
-        $page->slug    = '/';
+        $page = new Page();
+        $page->page_type = 'home';
+        $page->title = 'Dive Log Repeat - Home';
+        $page->slug = '/';
         $page->content = [
             'title'           => 'Here is a test title',
             'content'         => 'Here is some test content',
@@ -40,6 +41,7 @@ class HomePageSeeder extends Seeder {
             ],
 
         ];
+        $page->revision = 1;
         $page->is_active = true;
         $page->save();
     }

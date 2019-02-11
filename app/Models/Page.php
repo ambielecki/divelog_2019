@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 
 class Page extends Model {
-    protected $fillable = ['slug', 'title', 'content', 'is_active'];
+    protected $fillable = ['page_type', 'slug', 'title', 'content', 'is_active', 'revision'];
 
     public function getContentAttribute($value) {
         return json_decode($value, true);
