@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Ambielecki\DiveCalculator\DiveCalculator;
+use App\Http\Requests\DiveCalculatorRequest;
+use Illuminate\Http\JsonResponse;
 use Illuminate\View\View;
 
 class DiveCalculatorController extends Controller {
@@ -16,5 +18,9 @@ class DiveCalculatorController extends Controller {
             'table_2_body'     => $dive_calculator->getTableTwo(),
             'table_3_body'     => $dive_calculator->getTableThree(),
         ]);
+    }
+
+    public function getApiCalculation(DiveCalculatorRequest $request): JsonResponse {
+        return response()->json([], 200);
     }
 }

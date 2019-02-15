@@ -7,5 +7,5 @@
 @endsection
 
 @push('body_scripts')
-    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript" src="{{ mix('/js/main.js') }}"></script>
 @endpush
