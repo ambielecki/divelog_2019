@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     materialize.Collapsible.init(collapsible, {});
 
     let carousel = document.querySelectorAll('.carousel');
-    console.log(carousel);
     materialize.Carousel.init(carousel, {
         fullWidth: true,
         indicators: true

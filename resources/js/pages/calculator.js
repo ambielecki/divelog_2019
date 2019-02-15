@@ -56,4 +56,37 @@ document.addEventListener('DOMContentLoaded', function() {
 
         return false;
     });
+
+    // TODO: Look into using cellIndex and <tr>'s instead
+    let hover_cells = document.querySelectorAll('.hover_cell');
+
+    hover_cells.forEach(function (hover_cell) {
+        hover_cell.addEventListener('mouseover', function (event) {
+            let class_list = event.target.classList;
+            class_list.forEach(function (cell_class) {
+                if (cell_class !== 'hover_cell') {
+                    document.querySelectorAll(`.${cell_class}`).forEach(function (element) {
+                        element.classList.add('highlight_cell');
+                    })
+                }
+            });
+
+            event.target.classList.add('double_highlight');
+        });
+    });
+
+    hover_cells.forEach(function (hover_cell) {
+        hover_cell.addEventListener('mouseout', function (event) {
+            let class_list = event.target.classList;
+            class_list.forEach(function (cell_class) {
+                if (cell_class !== 'hover_cell') {
+                    document.querySelectorAll(`.${cell_class}`).forEach(function (element) {
+                        element.classList.remove('highlight_cell');
+                    })
+                }
+            });
+
+            event.target.classList.remove('double_highlight');
+        });
+    });
 });

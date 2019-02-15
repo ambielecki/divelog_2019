@@ -106,16 +106,16 @@
                                 <tr>
                                     <th></th>
                                     @foreach($table_1_header as $cell)
-                                        <th>{{ $cell }}</th>
+                                        <th class="hover_cell t1c{{ $loop->iteration }}">{{ $cell }}</th>
                                     @endforeach
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($table_1_body as $group => $row)
                                     <tr>
-                                        <th>{{ $group }}</th>
-                                        @for($i = 0; $i < count($table_1_header); $i++)
-                                            <td class="t1r{{ $loop->index }} t1c{{ $i }}">{{ $row[$i] ?? '' }}</td>
+                                        <th class="hover_cell t1r{{ $loop->iteration }}">{{ $group }}</th>
+                                        @for($i = 1; $i <= count($table_1_header); $i++)
+                                            <td class="hover_cell t1r{{ $loop->iteration }} t1c{{ $i }}">{{ $row[$i] ?? '' }}</td>
                                         @endfor
                                     </tr>
                                 @endforeach
