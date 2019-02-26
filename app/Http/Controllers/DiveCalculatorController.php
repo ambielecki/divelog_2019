@@ -21,6 +21,6 @@ class DiveCalculatorController extends Controller {
     }
 
     public function getApiCalculation(DiveCalculatorRequest $request): JsonResponse {
-        return response()->json([], 200);
+        return response()->json([]);
     }
 }

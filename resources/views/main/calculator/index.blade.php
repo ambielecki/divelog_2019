@@ -166,7 +166,10 @@
                                         @endphp
                                         @for($i = 0; $i < $count; $i++)
                                             <td class="hover_cell">
-                                                {{ isset($row[$i]) ? isset($row[$i + 1]) ? $row[$i + 1] + 1 : 0 : '' }}<br>
+                                                @if (isset($row[$i]))
+                                                    {{ isset($row[$i + 1]) ? $row[$i + 1] + 1 : 0 }}
+                                                @endif
+                                                <br>
                                                 {{ $row[$i] ?? '' }}
                                             </td>
                                         @endfor
