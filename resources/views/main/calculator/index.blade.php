@@ -106,16 +106,19 @@
                                 <tr>
                                     <th></th>
                                     @foreach($table_1_header as $cell)
-                                        <th class="hover_cell t1c{{ $loop->iteration }}">{{ $cell }}</th>
+                                        <th class="hover_cell">{{ $cell }}</th>
                                     @endforeach
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($table_1_body as $group => $row)
                                     <tr>
-                                        <th class="hover_cell t1r{{ $loop->iteration }}">{{ $group }}</th>
-                                        @for($i = 1; $i <= count($table_1_header); $i++)
-                                            <td class="hover_cell t1r{{ $loop->iteration }} t1c{{ $i }}">{{ $row[$i] ?? '' }}</td>
+                                        <th class="hover_cell">{{ $group }}</th>
+                                        @php
+                                            $count = count($table_1_header);
+                                        @endphp
+                                        @for($i = 0; $i < $count; $i++)
+                                            <td class="hover_cell">{{ $row[$i] ?? '' }}</td>
                                         @endfor
                                     </tr>
                                 @endforeach
@@ -150,18 +153,21 @@
                                 <tr>
                                     <th></th>
                                     @foreach($table_2_3_header as $cell)
-                                        <th>{{ $cell }}</th>
+                                        <th class="hover_cell">{{ $cell }}</th>
                                     @endforeach
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($table_2_body as $group => $row)
                                     <tr>
-                                        <th>{{ $group }}</th>
-                                        @for($i = 0; $i < count($table_2_3_header); $i++)
-                                            <td>
-                                                {{ isset($row[$i]) ? isset($row[$i+1]) ? $row[$i+1] + 1 : 0 : '' }}<br>
-                                                {{ isset($row[$i]) ? $row[$i] : "" }}
+                                        <th class="hover_cell">{{ $group }}</th>
+                                        @php
+                                            $count = count($table_2_3_header);
+                                        @endphp
+                                        @for($i = 0; $i < $count; $i++)
+                                            <td class="hover_cell">
+                                                {{ isset($row[$i]) ? isset($row[$i + 1]) ? $row[$i + 1] + 1 : 0 : '' }}<br>
+                                                {{ $row[$i] ?? '' }}
                                             </td>
                                         @endfor
                                     </tr>
@@ -198,20 +204,20 @@
                                 <tr>
                                     <th></th>
                                     @foreach($table_2_3_header as $cell)
-                                        <th>{{ $cell }}</th>
+                                        <th class="hover_cell">{{ $cell }}</th>
                                     @endforeach
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($table_3_body as $group => $row)
                                     <tr>
-                                        <th>{{ $group }}</th>
+                                        <th class="hover_cell">{{ $group }}</th>
                                         @php
                                             $count = count($table_2_3_header);
                                         @endphp
                                         @for($i = 0; $i < $count; $i++)
-                                            <td>
-                                                {{ isset($row[$i]) ? $row[$i] : "" }}
+                                            <td class="hover_cell">
+                                                {{ $row[$i] ?? '' }}
                                             </td>
                                         @endfor
                                     </tr>

@@ -62,30 +62,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
     hover_cells.forEach(function (hover_cell) {
         hover_cell.addEventListener('mouseover', function (event) {
-            let class_list = event.target.classList;
-            class_list.forEach(function (cell_class) {
-                if (cell_class !== 'hover_cell') {
-                    document.querySelectorAll(`.${cell_class}`).forEach(function (element) {
-                        element.classList.add('highlight_cell');
-                    })
-                }
-            });
+            let target = event.target;
+            let cell_index = target.cellIndex;
+            let target_row = target.closest('tr');
+            let row_index = target_row.rowIndex;
+            let rows = target.closest('table').rows;
 
-            event.target.classList.add('double_highlight');
+            if (cell_index !== 0) {
+                for (let row of rows) {
+                    row.cells[cell_index].classList.add('highlight_cell');
+                }
+            }
+
+            if (row_index !== 0) {
+                target_row.classList.add('highlight_cell');
+            }
+
+            if (cell_index !==0 && row_index !== 0) {
+                event.target.classList.add('double_highlight');
+            }
         });
     });
 
     hover_cells.forEach(function (hover_cell) {
         hover_cell.addEventListener('mouseout', function (event) {
-            let class_list = event.target.classList;
-            class_list.forEach(function (cell_class) {
-                if (cell_class !== 'hover_cell') {
-                    document.querySelectorAll(`.${cell_class}`).forEach(function (element) {
-                        element.classList.remove('highlight_cell');
-                    })
-                }
-            });
+            let target = event.target;
+            let cell_index = target.cellIndex;
 
+            let row = target.closest('tr');
+            let rows = target.closest('table').rows;
+
+            for (let row of rows) {
+                row.cells[cell_index].classList.remove('highlight_cell');
+            }
+
+            row.classList.remove('highlight_cell');
             event.target.classList.remove('double_highlight');
         });
     });
