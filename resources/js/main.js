@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     DiveLogRepeat.initTableCrosshair();
 });
 
-DiveLogRepeat = {
+window.DiveLogRepeat = {
     // Credit David Walsh (https://davidwalsh.name/javascript-debounce-function)
 
     // Returns a function, that, as long as it continues to be invoked, will not
@@ -36,7 +36,9 @@ DiveLogRepeat = {
 
             let later = function() {
                 timeout = null;
-                if (!immediate) func.apply(context, args);
+                if (!immediate) {
+                    func.apply(context, args);
+                }
             };
 
             let callNow = immediate && !timeout;
@@ -45,7 +47,9 @@ DiveLogRepeat = {
 
             timeout = setTimeout(later, wait);
 
-            if (callNow) func.apply(context, args);
+            if (callNow) {
+                func.apply(context, args);
+            }
         };
     },
 
