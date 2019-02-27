@@ -1,68 +1,105 @@
 document.addEventListener('DOMContentLoaded', function() {
     let nav = document.querySelectorAll('.sidenav');
-    materialize.Sidenav.init(nav, {});
+    Materialize.Sidenav.init(nav, {});
 
     let dropdowns = document.querySelectorAll('.dropdown-trigger');
-    materialize.Dropdown.init(dropdowns, {});
+    Materialize.Dropdown.init(dropdowns, {});
 
     let mobile_nav = document.querySelectorAll('.sidenav');
-    materialize.Sidenav.init(mobile_nav, {});
+    Materialize.Sidenav.init(mobile_nav, {});
 
     let collapsible = document.querySelectorAll('.collapsible');
-    materialize.Collapsible.init(collapsible, {});
+    Materialize.Collapsible.init(collapsible, {});
 
     let carousel = document.querySelectorAll('.carousel');
-    materialize.Carousel.init(carousel, {
+    Materialize.Carousel.init(carousel, {
         fullWidth: true,
         indicators: true
     });
 
-    DiveLogRepeat.initHighlightCells();
+    DiveLogRepeat.initTableCrosshair();
 });
 
 DiveLogRepeat = {
-    initHighlightCells: () => {
-        let hover_cells = document.querySelectorAll('.hover_cell');
+    // Credit David Walsh (https://davidwalsh.name/javascript-debounce-function)
 
-        hover_cells.forEach(function (hover_cell) {
-            hover_cell.addEventListener('mouseover', function (event) {
-                let target = event.target;
-                let cell_index = target.cellIndex;
-                let target_row = target.closest('tr');
-                let row_index = target_row.rowIndex;
-                let rows = target.closest('table').rows;
+    // Returns a function, that, as long as it continues to be invoked, will not
+    // be triggered. The function will be called after it stops being called for
+    // N milliseconds. If `immediate` is passed, trigger the function on the
+    // leading edge, instead of the trailing.
+    debounce: (func, wait, immediate = false) => {
+        let timeout;
 
-                if (cell_index !== 0) {
-                    for (let row of rows) {
-                        row.cells[cell_index].classList.add('highlight_cell');
+        return function executedFunction() {
+            let context = this;
+            let args = arguments;
+
+            let later = function() {
+                timeout = null;
+                if (!immediate) func.apply(context, args);
+            };
+
+            let callNow = immediate && !timeout;
+
+            clearTimeout(timeout);
+
+            timeout = setTimeout(later, wait);
+
+            if (callNow) func.apply(context, args);
+        };
+    },
+
+    initTableCrosshair: () => {
+        let crosshair_tables = document.querySelectorAll('.crosshair_table');
+
+        crosshair_tables.forEach(function (crosshair_table) {
+            let cells = crosshair_table.querySelectorAll('td, th');
+            let ignore_header = crosshair_table.classList.contains('crosshair_ignore_header')
+                || crosshair_table.classList.contains('crosshair_ignore_first');
+
+            let ignore_column = crosshair_table.classList.contains('crosshair_ignore_column')
+                || crosshair_table.classList.contains('crosshair_ignore_first');
+
+            cells.forEach(function (cell) {
+                cell.addEventListener('mouseover', function (event) {
+                    let target = event.target;
+                    let cell_index = target.cellIndex;
+                    let target_row = target.closest('tr');
+                    let row_index = target_row.rowIndex;
+                    let rows = target.closest('table').rows;
+
+                    if (cell_index !== 0 && ignore_column) {
+                        for (let row of rows) {
+                            row.cells[cell_index].classList.add('highlight_cell');
+                        }
                     }
-                }
 
-                if (row_index !== 0) {
-                    target_row.classList.add('highlight_cell');
-                }
+                    if (row_index !== 0 && ignore_header) {
+                        target_row.classList.add('highlight_cell');
+                    }
 
-                if (cell_index !==0 && row_index !== 0) {
-                    event.target.classList.add('double_highlight');
-                }
+                    if (!(cell_index === 0 && ignore_column) && !(row_index === 0 && ignore_header)) {
+                        target.classList.add('double_highlight');
+                    }
+                });
+
+                cell.addEventListener('mouseout', function (event) {
+                    let target = event.target;
+                    let cell_index = target.cellIndex;
+
+                    let row = target.closest('tr');
+                    let rows = target.closest('table').rows;
+
+                    for (let row of rows) {
+                        row.cells[cell_index].classList.remove('highlight_cell');
+                    }
+
+                    row.classList.remove('highlight_cell');
+                    target.classList.remove('double_highlight');
+                });
             });
         });
 
-        hover_cells.forEach(function (hover_cell) {
-            hover_cell.addEventListener('mouseout', function (event) {
-                let target = event.target;
-                let cell_index = target.cellIndex;
 
-                let row = target.closest('tr');
-                let rows = target.closest('table').rows;
-
-                for (let row of rows) {
-                    row.cells[cell_index].classList.remove('highlight_cell');
-                }
-
-                row.classList.remove('highlight_cell');
-                event.target.classList.remove('double_highlight');
-            });
-        });
     },
 };

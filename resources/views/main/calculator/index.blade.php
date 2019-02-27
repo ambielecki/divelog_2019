@@ -101,24 +101,24 @@
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title blue-text text-darken-4">PADI Dive Table 1</span>
-                        <table class="bordered striped centered dive_table responsive">
+                        <table class="bordered striped centered dive_table responsive crosshair_table crosshair_ignore_first">
                             <thead>
                                 <tr>
                                     <th></th>
                                     @foreach($table_1_header as $cell)
-                                        <th class="hover_cell">{{ $cell }}</th>
+                                        <th>{{ $cell }}</th>
                                     @endforeach
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($table_1_body as $group => $row)
                                     <tr>
-                                        <th class="hover_cell">{{ $group }}</th>
+                                        <th>{{ $group }}</th>
                                         @php
                                             $count = count($table_1_header);
                                         @endphp
                                         @for($i = 0; $i < $count; $i++)
-                                            <td class="hover_cell">{{ $row[$i] ?? '' }}</td>
+                                            <td>{{ $row[$i] ?? '' }}</td>
                                         @endfor
                                     </tr>
                                 @endforeach
@@ -148,24 +148,24 @@
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title blue-text text-darken-4">PADI Dive Table 2</span>
-                        <table class="bordered striped centered dive_table responsive">
+                        <table class="bordered striped centered dive_table responsive crosshair_table crosshair_ignore_first">
                             <thead>
                                 <tr>
                                     <th></th>
                                     @foreach($table_2_3_header as $cell)
-                                        <th class="hover_cell">{{ $cell }}</th>
+                                        <th>{{ $cell }}</th>
                                     @endforeach
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($table_2_body as $group => $row)
                                     <tr>
-                                        <th class="hover_cell">{{ $group }}</th>
+                                        <th>{{ $group }}</th>
                                         @php
                                             $count = count($table_2_3_header);
                                         @endphp
                                         @for($i = 0; $i < $count; $i++)
-                                            <td class="hover_cell">
+                                            <td>
                                                 @if (isset($row[$i]))
                                                     {{ isset($row[$i + 1]) ? $row[$i + 1] + 1 : 0 }}
                                                 @endif
@@ -202,24 +202,24 @@
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title blue-text text-darken-4">PADI Dive Table 3</span>
-                        <table class="bordered striped centered dive_table responsive">
+                        <table class="bordered striped centered dive_table responsive crosshair_table crosshair_ignore_first">
                             <thead>
                                 <tr>
                                     <th></th>
                                     @foreach($table_2_3_header as $cell)
-                                        <th class="hover_cell">{{ $cell }}</th>
+                                        <th>{{ $cell }}</th>
                                     @endforeach
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($table_3_body as $group => $row)
                                     <tr>
-                                        <th class="hover_cell">{{ $group }}</th>
+                                        <th>{{ $group }}</th>
                                         @php
                                             $count = count($table_2_3_header);
                                         @endphp
                                         @for($i = 0; $i < $count; $i++)
-                                            <td class="hover_cell">
+                                            <td>
                                                 {{ $row[$i] ?? '' }}
                                             </td>
                                         @endfor
