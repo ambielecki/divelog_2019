@@ -24,10 +24,36 @@ main {
     text-align: center;
 }
 
+// Crosshair Table Highlights
 .highlight_cell {
     background-color: #ffffb3 !important;
 }
 
 .double_highlight {
     background-color: #ffff33 !important;
+}
+
+// Home Page
+.hero_image_block {
+    position: relative;
+    width: 100%;
+}
+
+.hero_image {
+    width: 100%;
+}
+
+.hero_text {
+    font-size: 4vw;
+    color: white;
+    position: absolute;
+    bottom: 10%;
+    left: 2.5%;
+}
+
+// General Rules
+
+// Adds space between <p>'s
+p + p {
+    margin-top: 1em !important;
 }

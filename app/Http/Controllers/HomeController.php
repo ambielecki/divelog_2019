@@ -8,12 +8,18 @@ use Illuminate\View\View;
 class HomeController extends Controller {
     public function getHome(): View {
         $page = Page::where([
-                ['page_type', 'home'],
-                ['is_active', true],
-            ])
+            ['page_type', 'home'],
+            ['is_active', true],
+        ])
             ->orderBy('revision', 'DESC')
             ->first();
 
-        return view('main.home.index', ['page' => $page]);
+        $content = $page->content ?? [];
+        unset($page['content']);
+
+        return view('main.home.index', [
+            'page'    => $page,
+            'content' => $content,
+        ]);
     }
 }
