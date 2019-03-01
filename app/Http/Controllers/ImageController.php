@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class ImageController extends Controller
 {
+    // Admin Functionality
     public function getAdminList(): View {
         return view('admin.images.list');
     }
@@ -26,5 +28,13 @@ class ImageController extends Controller
 
     public function postAdminEdit():RedirectResponse {
         return redirect(route('admin_image_list'));
+    }
+
+    public function getAdminApiList(): JsonResponse {
+        return response()->json([]);
+    }
+
+    public function getAdminApiView(): JsonResponse {
+        return response()->json([]);
     }
 }
