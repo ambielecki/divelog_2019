@@ -31,7 +31,9 @@ class ImageController extends Controller
     }
 
     public function getAdminApiList(): JsonResponse {
-        return response()->json([]);
+        return response()->json([
+            'message' => 'hi there',
+        ]);
     }
 
     public function getAdminApiView(): JsonResponse {

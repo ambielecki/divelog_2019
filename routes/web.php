@@ -9,7 +9,7 @@ Route::get('calculator', 'DiveCalculatorController@getIndex')->name('calculator'
 Route::get('/', 'HomeController@getHome')->name('home');
 
 Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
-    Route::get('/', 'AdminController@getIndex');
+    Route::get('/', 'AdminController@getIndex')->name('admin');
 
     Route::group(['prefix' => '/images'], function () {
         Route::get('/', 'ImageController@getAdminList')->name('admin_image_list');
