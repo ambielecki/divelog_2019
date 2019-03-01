@@ -5,7 +5,7 @@
 @stop
 
 @section('content')
-    <div class="row">
+    <div class="row" id="calculator">
         <div class="col s12 m12 l4">
             <div class="card">
                 <div class="card-content">
@@ -34,33 +34,33 @@
                 <form class="form-horizontal" id="dive_calculator" method="post">
                     <div class="row">
                         <div class="input-field col s6 {{ $errors->has('dive_1_depth') ? ' has-error' : '' }}">
-                            <input id="dive_1_depth" type="text" class="form-control" name="dive_1_depth" value="{{ old('dive_1_depth') }}">
+                            <input v-model="dive_1_depth" id="dive_1_depth" type="text" class="form-control" name="dive_1_depth" value="{{ old('dive_1_depth') }}">
                             <label for="dive_1_depth">Dive 1 Depth</label>
                         </div>
                         <div class="input-field col s6 {{ $errors->has('dive_1_time') ? ' has-error' : '' }}">
-                            <input id="dive_1_time" type="text" name="dive_1_time">
+                            <input v-model="dive_1_time" id="dive_1_time" type="text" name="dive_1_time">
                             <label for="dive_1_time">Dive 1 Bottom Time</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s6 {{ $errors->has('surface_interval') ? ' has-error' : '' }}">
-                            <input id="surface_interval" type="text" name="surface_interval">
+                            <input v-model="surface_interval" id="surface_interval" type="text" name="surface_interval">
                             <label for="surface_interval">Surface Interval</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="input-field col s6 {{ $errors->has('dive_2_depth') ? ' has-error' : '' }}">
-                            <input id="dive_2_depth" type="text" class="form-control" name="dive_2_depth" value="{{ old('dive_2_depth') }}">
+                            <input v-model="dive_2_depth" id="dive_2_depth" type="text" class="form-control" name="dive_2_depth" value="{{ old('dive_2_depth') }}">
                             <label for="dive_2_depth">Dive 2 Depth</label>
                         </div>
                         <div class="input-field col s6 {{ $errors->has('dive_2_time') ? ' has-error' : '' }}">
-                            <input id="dive_2_time" type="text" name="dive_2_time">
+                            <input v-model="dive_2_time" id="dive_2_time" type="text" name="dive_2_time">
                             <label for="dive_2_time">Dive 2 Bottom Time</label>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col s12">
-                            <button type="submit" class="btn">Calculate</button>
+                            <button id="calculate_btn" class="btn">Calculate</button>
                         </div>
                     </div>
                 </form>
@@ -71,7 +71,7 @@
                 <div class="card-content">
                     <span class="card-title">Get Your Results</span>
                     <table class="dive_results">
-                        <tr is="dive-row" v-for="result in results" v-if="result.result" :component_message="result.message" :component_result="result.result"></tr>
+                        <tr is="dive-row" v-for="(result, key) in results" v-if="result && text[key]" :text="text[key]" :result="result"></tr>
                     </table>
                 </div>
                 <div v-if="error_messages" class="red darken-2 white-text dive_errors">

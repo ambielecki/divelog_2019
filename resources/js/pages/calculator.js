@@ -1,15 +1,17 @@
 Vue.component('dive-row', {
-    template: '<tr>' +
-        '<td>{{ component_message }}</td>' +
-        '<td>{{ component_result }}</td>' +
-        '</tr>',
-    props: ['component_message', 'component_result']
+    template: `
+        <tr>
+            <td>{{ text }}</td>
+            <td>{{ result }}</td>
+        </tr>`,
+    props: ['text', 'result']
 });
 
 Vue.component('dive-errors', {
-    template: '<ul>' +
-        '<li is="dive-error" v-for="error_message in dive_error_messages" :message="error_message"></li>' +
-        '</ul>',
+    template: `
+        <ul>
+            <li is="dive-error" v-for="error_message in dive_error_messages" :message="error_message"></li>
+        </ul>`,
     props: ['dive_error_messages']
 });
 
@@ -19,41 +21,44 @@ Vue.component('dive-error', {
 });
 
 let app = new Vue({
-    el: '#results',
+    el: '#calculator',
     data: {
-        results: {
-            dive_1_max_time: {
-                message: 'Max Time for Dive 1: ',
-                result: ''
-            },
-            dive_1_pg: {
-                message: 'Pressure Group after Dive 1: ',
-                result: ''
-            },
-            post_si_pg: {
-                message: 'Pressure Group after Surface Interval: ',
-                result: ''
-            },
-            dive_2_max_time: {
-                message: 'Max Time for Dive 2: ',
-                result: ''
-            },
-            dive_2_pg: {
-                message: 'Pressure Group after Dive 2:',
-                result: ''
-            },
+        dive_1_depth: '',
+        dive_1_time: '',
+        surface_interval: '',
+        dive_2_depth: '',
+        dive_2_time: '',
+        results: {},
+        text: {
+            dive_1_max_time: 'Max Time for Dive 1: ',
+            dive_1_pg: 'Pressure Group after Dive 1: ',
+            post_si_pg: 'Pressure Group after Surface Interval: ',
+            dive_2_max_time: 'Max Time for Dive 2: ',
+            dive_2_pg: 'Pressure Group after Dive 2:',
         },
+
         error_messages: null
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
-    let submit_button = document.querySelector('#dive_calculator');
-
-    submit_button.addEventListener('submit', function (event) {
+document.addEventListener("DOMContentLoaded", function(event) {
+    document.querySelector('#calculate_btn').addEventListener('click', function (event) {
         event.preventDefault();
-        console.log('click');
 
-        return false;
+        Axios.get('/api/calculator', {
+            params: {
+                dive_1_depth: app.dive_1_depth,
+                dive_1_time: app.dive_1_time,
+                surface_interval: app.surface_interval,
+                dive_2_depth: app.dive_2_depth,
+                dive_2_time: app.dive_2_time,
+            },
+        })
+            .then(function (response) {
+                app.results = response.data;
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
     });
 });
