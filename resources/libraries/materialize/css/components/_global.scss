@@ -409,7 +409,7 @@ table {
 
     > tbody {
       > tr:nth-child(odd) {
-        background-color: $table-striped-color;
+        background-color: $primary-color-light;
       }
 
       > tr > td {
@@ -421,7 +421,7 @@ table {
   &.highlight > tbody > tr {
     transition: background-color .25s ease;
     &:hover {
-      background-color: $table-striped-color;
+      background-color: $primary-color-light;
     }
   }
 

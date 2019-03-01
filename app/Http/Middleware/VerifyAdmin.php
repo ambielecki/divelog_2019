@@ -12,7 +12,7 @@ class VerifyAdmin {
         }
 
         if (auth()->check()) {
-            return back()->with('flash_message', 'You are not authorized to view admin pages.');
+            return back()->with('flash_warning', 'You are not authorized to view admin pages.');
         }
 
         return redirect()->guest('/login')->with('flash_message', 'Please log in with admin access to view this page');

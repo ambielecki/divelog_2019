@@ -11,7 +11,7 @@ class DiveCalculatorController extends Controller {
     public function getIndex(): View {
         $dive_calculator = new DiveCalculator();
 
-        return view('main.calculator.index', [
+        return view('main.calculator.calculator', [
             'table_1_header'   => $dive_calculator->getTableDepths(),
             'table_1_body'     => $dive_calculator->getTableOne(),
             'table_2_3_header' => $dive_calculator->getTableGroups(),

@@ -17,7 +17,7 @@ class HomeController extends Controller {
         $content = $page->content ?? [];
         unset($page['content']);
 
-        return view('main.home.index', [
+        return view('main.home.home', [
             'page'    => $page,
             'content' => $content,
         ]);

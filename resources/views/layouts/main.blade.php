@@ -5,7 +5,7 @@
     <main>
         @yield('content')
     </main>
-    @include('shared.footer.footer')
+    @include('shared.footer')
 @endsection
 
 @push('body_scripts')

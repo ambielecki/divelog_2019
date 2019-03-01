@@ -33,28 +33,55 @@
             <div class="card-panel">
                 <form class="form-horizontal" id="dive_calculator" method="post">
                     <div class="row">
-                        <div class="input-field col s6 {{ $errors->has('dive_1_depth') ? ' has-error' : '' }}">
-                            <input v-model="dive_1_depth" id="dive_1_depth" type="text" class="form-control" name="dive_1_depth" value="{{ old('dive_1_depth') }}">
+                        <div class="input-field col s6">
+                            <input
+                                v-model="calculator.dive_1_depth"
+                                id="dive_1_depth" type="text"
+                                class="form-control"
+                                name="dive_1_depth"
+                                value="{{ old('dive_1_depth') }}"
+                            >
                             <label for="dive_1_depth">Dive 1 Depth</label>
                         </div>
-                        <div class="input-field col s6 {{ $errors->has('dive_1_time') ? ' has-error' : '' }}">
-                            <input v-model="dive_1_time" id="dive_1_time" type="text" name="dive_1_time">
+                        <div class="input-field col s6">
+                            <input
+                                v-model="calculator.dive_1_time"
+                                id="dive_1_time"
+                                type="text"
+                                name="dive_1_time"
+                            >
                             <label for="dive_1_time">Dive 1 Bottom Time</label>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s6 {{ $errors->has('surface_interval') ? ' has-error' : '' }}">
-                            <input v-model="surface_interval" id="surface_interval" type="text" name="surface_interval">
+                        <div class="input-field col s6">
+                            <input
+                                v-model="calculator.surface_interval"
+                                id="surface_interval"
+                                type="text"
+                                name="surface_interval"
+                            >
                             <label for="surface_interval">Surface Interval</label>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="input-field col s6 {{ $errors->has('dive_2_depth') ? ' has-error' : '' }}">
-                            <input v-model="dive_2_depth" id="dive_2_depth" type="text" class="form-control" name="dive_2_depth" value="{{ old('dive_2_depth') }}">
+                        <div class="input-field col s6">
+                            <input
+                                v-model="calculator.dive_2_depth"
+                                id="dive_2_depth"
+                                type="text"
+                                name="dive_2_depth"
+                                value="{{ old('dive_2_depth') }}"
+                            >
                             <label for="dive_2_depth">Dive 2 Depth</label>
                         </div>
-                        <div class="input-field col s6 {{ $errors->has('dive_2_time') ? ' has-error' : '' }}">
-                            <input v-model="dive_2_time" id="dive_2_time" type="text" name="dive_2_time">
+                        <div class="input-field col s6">
+                            <input
+                                v-model="calculator.dive_2_time"
+                                id="dive_2_time"
+                                type="text"
+                                name="dive_2_time"
+                            >
                             <label for="dive_2_time">Dive 2 Bottom Time</label>
                         </div>
                     </div>
@@ -191,9 +218,9 @@
                         </p><br>
                         <p>
                             To use this version of the table, match your post surface interval pressure group to the table headers.
-                            Move down until you find your planned depth in the leftmost columnj.  This value is your Residual Nitrogen Time.  This value
+                            Move down until you find your planned depth in the leftmost column.  This value is your Residual Nitrogen Time.  This value
                             is added to your dive's bottom time to calculate your new pressure group.  This time can also be subtracted from the
-                            maximum bottom time at a give depth to get your adjusted maximum bottom time.
+                            maximum bottom time at a given depth to get your adjusted maximum bottom time.
                         </p>
                     </div>
                 </div>

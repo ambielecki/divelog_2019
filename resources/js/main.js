@@ -1,23 +1,13 @@
 document.addEventListener('DOMContentLoaded', function() {
-    let nav = document.querySelectorAll('.sidenav');
-    Materialize.Sidenav.init(nav, {});
-
-    let dropdowns = document.querySelectorAll('.dropdown-trigger');
-    Materialize.Dropdown.init(dropdowns, {});
-
-    let mobile_nav = document.querySelectorAll('.sidenav');
-    Materialize.Sidenav.init(mobile_nav, {});
-
-    let collapsible = document.querySelectorAll('.collapsible');
-    Materialize.Collapsible.init(collapsible, {});
-
-    let carousel = document.querySelectorAll('.carousel');
-    Materialize.Carousel.init(carousel, {
+    DiveLogRepeat.initSidenav();
+    DiveLogRepeat.initDropdown();
+    DiveLogRepeat.initCollapsible();
+    DiveLogRepeat.initCarousel({
         fullWidth: true,
         indicators: true
     });
-
     DiveLogRepeat.initTableCrosshair();
+    DiveLogRepeat.initFlashMessage();
 });
 
 window.DiveLogRepeat = {
@@ -103,7 +93,34 @@ window.DiveLogRepeat = {
                 });
             });
         });
-
-
     },
+
+    initSidenav: (options = {}) => {
+        let nav = document.querySelectorAll('.sidenav');
+        Materialize.Sidenav.init(nav, options);
+    },
+
+    initDropdown: (options = {}) => {
+        let dropdowns = document.querySelectorAll('.dropdown-trigger');
+        Materialize.Dropdown.init(dropdowns, options);
+    },
+
+    initCollapsible: (options = {}) => {
+        let collapsible = document.querySelectorAll('.collapsible');
+        Materialize.Collapsible.init(collapsible, options);
+    },
+
+    initCarousel: (options = {}) => {
+        let carousel = document.querySelectorAll('.carousel');
+        Materialize.Carousel.init(carousel, options);
+    },
+
+    initFlashMessage: () => {
+        document.querySelectorAll('.flash_close').forEach(function (element) {
+            element.addEventListener('click', function (event) {
+                let parent = event.target.closest('.flash');
+                parent.style.display = 'none';
+            });
+        });
+    }
 };

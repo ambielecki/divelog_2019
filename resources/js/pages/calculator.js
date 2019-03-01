@@ -23,16 +23,19 @@ Vue.component('dive-error', {
 let app = new Vue({
     el: '#calculator',
     data: {
-        dive_1_depth: '',
-        dive_1_time: '',
-        surface_interval: '',
-        dive_2_depth: '',
-        dive_2_time: '',
+        calculator: {
+            dive_1_depth: '',
+            dive_1_time: '',
+            surface_interval: '',
+            dive_2_depth: '',
+            dive_2_time: '',
+        },
         results: {},
         text: {
             dive_1_max_time: 'Max Time for Dive 1: ',
             dive_1_pg: 'Pressure Group after Dive 1: ',
             post_si_pg: 'Pressure Group after Surface Interval: ',
+            rnt: 'Residual Nitrogen Time: ',
             dive_2_max_time: 'Max Time for Dive 2: ',
             dive_2_pg: 'Pressure Group after Dive 2:',
         },
@@ -46,13 +49,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
         event.preventDefault();
 
         Axios.get('/api/calculator', {
-            params: {
-                dive_1_depth: app.dive_1_depth,
-                dive_1_time: app.dive_1_time,
-                surface_interval: app.surface_interval,
-                dive_2_depth: app.dive_2_depth,
-                dive_2_time: app.dive_2_time,
-            },
+            params: app.calculator,
         })
             .then(function (response) {
                 app.results = response.data;

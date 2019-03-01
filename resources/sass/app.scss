@@ -57,3 +57,28 @@ main {
 p + p {
     margin-top: 1em !important;
 }
+
+.dive_table td, .dive_table th {
+    padding: 0.15em 0.3em 0.15em 0.3em;
+}
+
+.dive_table td {
+    font-weight: 500;
+}
+
+.dive_table th {
+    font-weight: 700;
+}
+
+.flash {
+    position: relative;
+}
+
+.flash_span {
+    display: inline;
+    padding-left: 0.5em;
+}
+
+.flash_close {
+    padding-left: 0.5em;
+}
