@@ -19,3 +19,17 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
         Route::post('/edit/{id}', 'ImageController@postAdminEdit');
     });
 });
+
+// web api group
+Route::group(['prefix' => '/api'], function () {
+    Route::post('/heartbeat', 'HeartbeatController@postHeartbeat');
+
+    // admin api routes
+    Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
+        // admin image api routes
+        Route::group(['prefix' => '/images'], function () {
+            Route::get('/', 'ImageController@getAdminApiList')->name('api_admin_image_list');
+            Route::get('/{id}', 'ImageController@getAdminApiView')->name('api_admin_image_view');
+        });
+    });
+});

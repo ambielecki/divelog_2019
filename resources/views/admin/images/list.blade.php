@@ -11,6 +11,7 @@
 @push('body_scripts')
     <script type="text/javascript">
         document.addEventListener('DOMContentLoaded', function() {
+            console.log('sending axios request');
             Axios
                 .get('/api/admin/images', {})
                 .then(function (response) {

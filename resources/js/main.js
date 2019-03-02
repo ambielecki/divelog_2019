@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     DiveLogRepeat.initTableCrosshair();
     DiveLogRepeat.initFlashMessage();
+    DiveLogRepeat.initHeartbeat();
 });
 
 window.DiveLogRepeat = {
@@ -122,5 +123,17 @@ window.DiveLogRepeat = {
                 parent.style.display = 'none';
             });
         });
-    }
+    },
+
+    initHeartbeat: () => {
+        window.session_heartbeat = new Worker('/js/helpers/heartbeat.js');
+        window.session_heartbeat.addEventListener('message', function (e) {
+            switch (e.data) {
+                case 'pulse': Axios.post('/api/heartbeat', {});
+            }
+        });
+
+        window.session_heartbeat.postMessage('begin_pulse');
+    },
+
 };

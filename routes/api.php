@@ -20,9 +20,3 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('calculator', 'DiveCalculatorController@getApiCalculation');
 
 // TODO :: Setup passport
-Route::group(['prefix' => '/admin'], function () {
-    Route::group(['prefix' => '/images'], function () {
-        Route::get('/', 'ImageController@getAdminApiList')->name('api_admin_image_list');
-        Route::get('/{id}', 'ImageController@getAdminApiView')->name('api_admin_image_view');
-    });
-});
