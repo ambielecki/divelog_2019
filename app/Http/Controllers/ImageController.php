@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
+use App\Models\Tag;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -15,7 +17,15 @@ class ImageController extends Controller
     }
 
     public function getAdminCreate(): View {
-        return view('admin.images.create');
+        $image = new Image();
+        $tags = Tag::query()
+            ->orderBy('name', 'ASC')
+            ->get();
+
+        return view('admin.images.create', [
+            'image' => $image,
+            'tags'  => $tags,
+        ]);
     }
 
     public function postAdminCreate(): RedirectResponse {

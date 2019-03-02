@@ -6,9 +6,11 @@ document.addEventListener('DOMContentLoaded', function() {
         fullWidth: true,
         indicators: true
     });
+    DiveLogRepeat.initSelects();
     DiveLogRepeat.initTableCrosshair();
     DiveLogRepeat.initFlashMessage();
     DiveLogRepeat.initHeartbeat();
+    Materialize.updateTextFields();
 });
 
 window.DiveLogRepeat = {
@@ -114,6 +116,12 @@ window.DiveLogRepeat = {
     initCarousel: (options = {}) => {
         let carousel = document.querySelectorAll('.carousel');
         Materialize.Carousel.init(carousel, options);
+    },
+
+    initSelects: (options = {}) => {
+        let selects = document.querySelectorAll('.material_select');
+        console.log(selects);
+        Materialize.FormSelect.init(selects, options);
     },
 
     initFlashMessage: () => {

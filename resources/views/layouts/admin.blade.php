@@ -1,6 +1,7 @@
 @extends('layouts.shell')
 
 @section('layout')
+    @include('admin.header.header')
     <main>
         @yield('content')
     </main>
