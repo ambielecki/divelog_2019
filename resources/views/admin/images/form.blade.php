@@ -1,4 +1,4 @@
-<form class="col s12" action="{{ $route }}" method="POST">
+<form class="col s12" action="{{ $route }}" method="POST" enctype="multipart/form-data">
     {{ csrf_field() }}
 
     <div class="row">
@@ -6,11 +6,16 @@
             <div class="file-field input-field">
                 <div class="btn">
                     <span>Select Image</span>
-                    <input type="file">
+                    <input type="file" name="image_file">
                 </div>
                 <div class="file-path-wrapper">
                     <input class="file-path validate" type="text">
                 </div>
+                @if ($errors->has('image_file'))
+                    <span class="red-text">
+                        <strong>{{ $errors->first('image_file') }}</strong>
+                    </span>
+                @endif
             </div>
         @endif
 
@@ -27,8 +32,13 @@
 
     <div class="row">
         <div class="input-field col s12">
-            <textarea id="description" class="materialize-textarea">{{ old('description', $image->description) }}</textarea>
+            <textarea name='description' id="description" class="materialize-textarea">{{ old('description', $image->description) }}</textarea>
             <label for="description">Description</label>
+            @if ($errors->has('description'))
+                <span class="red-text">
+                    <strong>{{ $errors->first('description') }}</strong>
+                </span>
+            @endif
         </div>
     </div>
 
@@ -36,8 +46,8 @@
         <div class="input-field col s12">
             <select name="tags[]" id="tags" class="material_select" multiple>
                 <option value="" disabled selected>Add Tags</option>
-                @foreach ($tags as $tag)
-                    <option value="{{ $tag->id }}">{{ $tag->name }}</option>
+                @foreach ($tags as $id => $tag)
+                    <option value="{{ $id }}">{{ $tag }}</option>
                 @endforeach
             </select>
             <label for="tags">Add Existing Tags</label>
@@ -46,8 +56,13 @@
 
     <div class="row">
         <div class="input-field col s12">
-            <textarea id="new_tags" class="materialize-textarea" placeholder="Add New Tags Separated By Commas">{{ old('new_tags') }}</textarea>
+            <textarea name="new_tags" id="new_tags" class="materialize-textarea" placeholder="Add New Tags Separated By Commas">{{ old('new_tags') }}</textarea>
             <label for="new_tags">New Tags</label>
+            @if ($errors->has('new_tags'))
+                <span class="red-text">
+                    <strong>{{ $errors->first('new_tags') }}</strong>
+                </span>
+            @endif
         </div>
     </div>
 
