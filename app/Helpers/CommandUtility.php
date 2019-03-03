@@ -20,8 +20,6 @@ class CommandUtility {
 
         $command = implode(' ', $command_parts);
 
-        $test = "nohup $command >> $log_file 2>&1 &";
-
         shell_exec("nohup $command >> $log_file 2>&1 &");
     }
 

@@ -45,7 +45,7 @@ class Image extends Model {
                 $db_image->folder = $folder;
                 $db_image->title = $request->input('title');
                 $db_image->description = $request->input('description');
-                $db_image->is_hero = $request->input('is_hero') ?: 0;
+                $db_image->is_hero = $request->input('is_hero') ? 1 : 0;
                 $db_image->save();
 
                 $task = Task::create([
@@ -55,9 +55,8 @@ class Image extends Model {
                     'status'  => Task::STATUS_PENDING,
                 ]);
 
-                $command = app_path("php artisan divelog:resize_image $task->id");
-
-                CommandUtility::runBackgroundCommand(app_path("php artisan divelog:resize_image $task->id"));
+                $path = base_path();
+                shell_exec("cd $path && nohup php artisan divelog:resize_image $task->id >> /dev/null 2>&1 &");
 
                 return $db_image->id;
             }

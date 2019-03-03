@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Image;
 use App\Models\Page;
 use Illuminate\View\View;
 
@@ -17,9 +18,16 @@ class HomeController extends Controller {
         $content = $page->content ?? [];
         unset($page['content']);
 
+        $hero_image_content = $content['hero_image'] ?? [];
+        $hero_image = false;
+        if ($hero_image_content) {
+            $hero_image = Image::find($hero_image_content['id']);
+        }
+
         return view('main.home.home', [
-            'page'    => $page,
-            'content' => $content,
+            'page'       => $page,
+            'content'    => $content,
+            'hero_image' => $hero_image,
         ]);
     }
 }
