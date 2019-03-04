@@ -112,7 +112,8 @@ class ImageController extends Controller {
         $query = Image::query()
             ->with('tags')
             ->limit($limit)
-            ->skip($skip);
+            ->skip($skip)
+            ->orderBy('id', 'DESC');
 
         if ($search) {
             $search = '%' . $search . '%';
