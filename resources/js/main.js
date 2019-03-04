@@ -27,7 +27,6 @@ window.DiveLogRepeat = {
     // leading edge, instead of the trailing.
     debounce: (func, wait, immediate) => {
         var timeout;
-        console.log('bounce');
 
         return function executedFunction() {
             var context = this;
@@ -146,10 +145,10 @@ window.DiveLogRepeat = {
     },
 
     loadVueComponents: () => {
-        Vue.component('pagination', require('./components/PaginationComponent').default);
         // image components
         Vue.component('image-thumbnail', require('./components/images/ImageThumbnailComponent').default);
         Vue.component('image-detail', require('./components/images/ImageDetailComponent').default);
+        Vue.component('page-list', require('./components/PageListComponent').default);
     },
 
     initVueFilters: () => {

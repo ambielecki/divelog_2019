@@ -26,6 +26,11 @@ let app = new Vue({
             })
         },
 
+        paginationClick(page) {
+            this.page = page;
+            this.getImageList();
+        },
+
         getImageList() {
             this.images_loading = true;
             Axios.get('/api/admin/images', {

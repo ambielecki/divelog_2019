@@ -53,9 +53,9 @@
                             </div>
                         </div>
 
-                        <div class="row" v-if="pages !== 1">
+                        <div class="row" v-if="pages && (pages !== 1)">
                             <div class="col s12">
-                                <pagination :page="page" :pages="pages"></pagination>
+                                <page-list :page="page" :pages="pages" :links="false" @page_clicked="paginationClick"></page-list>
                             </div>
                         </div>
 

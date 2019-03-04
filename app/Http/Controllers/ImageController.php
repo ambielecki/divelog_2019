@@ -120,9 +120,7 @@ class ImageController extends Controller {
                 });
         }
 
-//        $count = $query->count();
-        $count = 150;
-        $page = 5;
+        $count = $query->count();
 
         $images = $query
             ->limit($limit)
