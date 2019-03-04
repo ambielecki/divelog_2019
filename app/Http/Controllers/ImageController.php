@@ -135,7 +135,7 @@ class ImageController extends Controller {
         ]);
     }
 
-    public function getAdminApiView(): JsonResponse {
+    public function getAdminApiDetail(): JsonResponse {
         return response()->json([]);
     }
 }
