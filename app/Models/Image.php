@@ -13,7 +13,9 @@ use Log;
 
 class Image extends Model {
     public function tags(): BelongsToMany {
-        return $this->belongsToMany(Tag::class)->withTimestamps();
+        return $this->belongsToMany(Tag::class)
+            ->withTimestamps()
+            ->orderBy('name', 'ASC');
     }
 
     public static function createImage(ImageCreateRequest $request): int {
