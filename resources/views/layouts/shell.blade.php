@@ -17,7 +17,7 @@
 <body class="blue lighten-5">
     @yield('layout')
     <script src="{{ mix('/js/vendor.js') }}"></script>
-    <script src="{{ mix('/js/app.js') }}"></script>
+    <script src="{{ mix('/js/main.js') }}"></script>
     @stack('body_scripts')
 </body>
 </html>

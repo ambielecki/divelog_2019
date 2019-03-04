@@ -10,6 +10,7 @@ use App\Models\Tag;
 use DB;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Session;
 
@@ -81,15 +82,52 @@ class ImageController extends Controller {
         $image->description = $request->input('description');
 
         if ($image->save()) {
+            if ($request->input('new_tags')) {
+                $new_tag_ids = Tag::createNewTags($request->input('new_tags'));
+            } else {
+                $new_tag_ids = [];
+            }
+
+            $existing_tags = $request->input('tags') ?: [];
+            $tags = array_unique(array_merge($existing_tags, $new_tag_ids));
+            $image->tags()->sync($tags);
+
+            Session::flash('flash_success', 'Image Updated Successfully');
+
             return redirect(route('admin_image_edit', ['ids' => $id]));
         }
+
+        Session::flash('flash_warning', 'There was a problem updating your image, please try again');
 
         return redirect()->back()->withInput();
     }
 
-    public function getAdminApiList(): JsonResponse {
+    public function getAdminApiList(Request $request): JsonResponse {
+        $search = $request->get('search');
+        $page = $request->get('page') ?: 1;
+        $limit = $request->get('limit') ?: 25;
+        $skip = ($page - 1) * $limit;
+
+        $count = Image::count();
+        $query = Image::query()
+            ->with('tags')
+            ->limit($limit)
+            ->skip($skip);
+
+        if ($search) {
+            $search = '%' . $search . '%';
+            $query = $query->where('title', 'LIKE', $search)
+                ->orWhereHas('tags', function ($query) use ($search) {
+                    $query->where('name', 'LIKE', $search);
+                });
+        }
+
+        $images = $query->get();
+
         return response()->json([
-            'message' => 'hi there',
+            'images' => $images,
+            'page' => $page,
+            'count' => $count,
         ]);
     }
 

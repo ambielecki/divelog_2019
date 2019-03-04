@@ -1,4 +1,7 @@
 document.addEventListener('DOMContentLoaded', function() {
+    Vue.use(VueRouter);
+    Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
     DiveLogRepeat.initSidenav();
     DiveLogRepeat.initDropdown();
     DiveLogRepeat.initCollapsible();
