@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
     Vue.use(VueRouter);
-    Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+
+    DiveLogRepeat.loadVueComponents();
+    DiveLogRepeat.initVueFilters();
 
     DiveLogRepeat.initSidenav();
     DiveLogRepeat.initDropdown();
@@ -23,29 +25,26 @@ window.DiveLogRepeat = {
     // be triggered. The function will be called after it stops being called for
     // N milliseconds. If `immediate` is passed, trigger the function on the
     // leading edge, instead of the trailing.
-    debounce: (func, wait, immediate = false) => {
-        let timeout;
+    debounce: (func, wait, immediate) => {
+        var timeout;
+        console.log('bounce');
 
         return function executedFunction() {
-            let context = this;
-            let args = arguments;
+            var context = this;
+            var args = arguments;
 
-            let later = function() {
+            var later = function() {
                 timeout = null;
-                if (!immediate) {
-                    func.apply(context, args);
-                }
+                if (!immediate) func.apply(context, args);
             };
 
-            let callNow = immediate && !timeout;
+            var callNow = immediate && !timeout;
 
             clearTimeout(timeout);
 
             timeout = setTimeout(later, wait);
 
-            if (callNow) {
-                func.apply(context, args);
-            }
+            if (callNow) func.apply(context, args);
         };
     },
 
@@ -123,7 +122,6 @@ window.DiveLogRepeat = {
 
     initSelects: (options = {}) => {
         let selects = document.querySelectorAll('.material_select');
-        console.log(selects);
         Materialize.FormSelect.init(selects, options);
     },
 
@@ -147,4 +145,17 @@ window.DiveLogRepeat = {
         window.session_heartbeat.postMessage('begin_pulse');
     },
 
+    loadVueComponents: () => {
+        Vue.component('pagination', require('./components/PaginationComponent').default);
+        // image components
+        Vue.component('image-thumbnail', require('./components/images/ImageThumbnailComponent').default);
+        Vue.component('image-detail', require('./components/images/ImageDetailComponent').default);
+    },
+
+    initVueFilters: () => {
+        Vue.filter('format_date', function (date) {
+            if (!date) return '';
+            return Moment.tz(date, 'America/New_York').format('YYYY-MM-DD');
+        })
+    }
 };

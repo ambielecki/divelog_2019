@@ -82,3 +82,11 @@ p + p {
 .flash_close {
     padding-left: 0.5em;
 }
+
+.padded_image {
+    padding: 0.25em;
+}
+
+.padded_image.active_image {
+    background-color: dodgerblue;
+}

@@ -105,14 +105,11 @@ class ImageController extends Controller {
     public function getAdminApiList(Request $request): JsonResponse {
         $search = $request->get('search');
         $page = $request->get('page') ?: 1;
-        $limit = $request->get('limit') ?: 25;
+        $limit = $request->get('limit') ?: 20;
         $skip = ($page - 1) * $limit;
 
-        $count = Image::count();
         $query = Image::query()
             ->with('tags')
-            ->limit($limit)
-            ->skip($skip)
             ->orderBy('id', 'DESC');
 
         if ($search) {
@@ -123,11 +120,19 @@ class ImageController extends Controller {
                 });
         }
 
-        $images = $query->get();
+//        $count = $query->count();
+        $count = 150;
+        $page = 5;
+
+        $images = $query
+            ->limit($limit)
+            ->skip($skip)
+            ->get();
 
         return response()->json([
             'images' => $images,
             'page' => $page,
+            'pages' => ceil($count / $limit),
             'count' => $count,
         ]);
     }
