@@ -16,10 +16,11 @@ class Tag extends Model {
         return $this->belongsToMany(Image::class)->withTimestamps();
     }
 
-    public static function createNewTags(array $tags): array {
+    public static function createNewTags(string $tags): array {
         $ids = [];
+        $tag_names = explode(',', str_replace(' ', '', $tags));
 
-        foreach ($tags as $tag_name) {
+        foreach ($tag_names as $tag_name) {
             if ($tag_name) {
                 $tag = Tag::where('name', $tag_name)->first();
                 if (!$tag) {

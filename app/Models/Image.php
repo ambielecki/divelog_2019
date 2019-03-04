@@ -26,20 +26,20 @@ class Image extends Model {
                 });
             }
 
-            $folder = 'app/images/' . date('Y-m') . '/';
+            $folder = 'images/' . date('Y-m') . '/';
             $file_name = uniqid(date('Y-m-d') . '_', false);
             $path = $folder . $file_name;
 
             // check if folder exists, if not create it
-            if (!File::exists(storage_path('app/images/'))) {
-                File::makeDirectory(storage_path('app/images'));
+            if (!File::exists(public_path('images/'))) {
+                File::makeDirectory(public_path('images'));
             }
 
-            if (!File::exists(storage_path($folder))) {
-                File::makeDirectory(storage_path($folder));
+            if (!File::exists(public_path($folder))) {
+                File::makeDirectory(public_path($folder));
             }
 
-            if ($image->save(storage_path($path . '.jpg'))) {
+            if ($image->save(public_path($path . '.jpg'))) {
                 $db_image = new self();
                 $db_image->file_name = $file_name . '.jpg';
                 $db_image->folder = $folder;

@@ -1,12 +1,11 @@
 <?php
 
 Auth::routes();
-Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
-Route::get('test', 'TestController@getTest');
 
 Route::get('calculator', 'DiveCalculatorController@getIndex')->name('calculator');
 
 Route::get('/', 'HomeController@getHome')->name('home');
+Route::get('/image/{folder}/{file_name}', 'ImageController@getImage')->name('images');
 
 Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
     Route::get('/', 'AdminController@getIndex')->name('admin');
@@ -18,6 +17,9 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
         Route::get('/edit/{id}', 'ImageController@getAdminEdit')->name('admin_image_edit');
         Route::post('/edit/{id}', 'ImageController@postAdminEdit');
     });
+
+    Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
+    Route::get('test', 'TestController@getTest');
 });
 
 // web api group

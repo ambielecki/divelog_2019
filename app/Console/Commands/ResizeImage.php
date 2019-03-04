@@ -37,7 +37,7 @@ class ResizeImage extends Command {
         $image = Image::find($task->options['image_id']);
         $this->line("Found image id: $image->id");
 
-        $intervention_image = InterventionImage::make(File::get(storage_path($image->folder . $image->file_name)));
+        $intervention_image = InterventionImage::make(File::get(public_path($image->folder . $image->file_name)));
 
         $small_folder = $image->folder . 'small/';
         $medium_folder = $image->folder . 'medium/';
@@ -45,8 +45,8 @@ class ResizeImage extends Command {
         $xl_folder = $image->folder . 'xl/';
 
         try {
-            if (!File::exists(storage_path($xl_folder))) {
-                File::makeDirectory(storage_path($xl_folder));
+            if (!File::exists(public_path($xl_folder))) {
+                File::makeDirectory(public_path($xl_folder));
             }
 
             if ($image->has_high_res) {
@@ -55,12 +55,12 @@ class ResizeImage extends Command {
                     $constraint->aspectRatio();
                 });
 
-                $xl_image->save(storage_path($xl_folder . $image->file_name));
+                $xl_image->save(public_path($xl_folder . $image->file_name), 70);
                 unset($xl_image);
             }
 
-            if (!File::exists(storage_path($large_folder))) {
-                File::makeDirectory(storage_path($large_folder));
+            if (!File::exists(public_path($large_folder))) {
+                File::makeDirectory(public_path($large_folder));
             }
 
             $large_image = $intervention_image;
@@ -68,11 +68,11 @@ class ResizeImage extends Command {
                 $constraint->aspectRatio();
             });
 
-            $large_image->save(storage_path($large_folder . $image->file_name));
+            $large_image->save(public_path($large_folder . $image->file_name), 70);
             unset($large_image);
 
-            if (!File::exists(storage_path($medium_folder))) {
-                File::makeDirectory(storage_path($medium_folder));
+            if (!File::exists(public_path($medium_folder))) {
+                File::makeDirectory(public_path($medium_folder));
             }
 
             $medium_image = $intervention_image;
@@ -80,11 +80,11 @@ class ResizeImage extends Command {
                 $constraint->aspectRatio();
             });
 
-            $medium_image->save(storage_path($medium_folder . $image->file_name));
+            $medium_image->save(public_path($medium_folder . $image->file_name), 70);
             unset($medium_image);
 
-            if (!File::exists(storage_path($small_folder))) {
-                File::makeDirectory(storage_path($small_folder));
+            if (!File::exists(public_path($small_folder))) {
+                File::makeDirectory(public_path($small_folder));
             }
 
             $small_image = $intervention_image;
@@ -92,7 +92,7 @@ class ResizeImage extends Command {
                 $constraint->aspectRatio();
             });
 
-            $small_image->save(storage_path($small_folder . $image->file_name));
+            $small_image->save(public_path($small_folder . $image->file_name), 70);
             unset($small_image);
 
             $image->has_sizes = 1;

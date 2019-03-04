@@ -2,11 +2,11 @@
     {{ csrf_field() }}
 
     <div class="row">
-        @if (!$image->file_path)
+        @if (!$image->file_name)
             <div class="file-field input-field">
                 <div class="btn">
                     <span>Select Image</span>
-                    <input type="file" name="image_file">
+                    <input type="file" name="image_file" value="{{ old('file') }}">
                 </div>
                 <div class="file-path-wrapper">
                     <input class="file-path validate" type="text">
@@ -45,9 +45,14 @@
     <div class="row">
         <div class="input-field col s12">
             <select name="tags[]" id="tags" class="material_select" multiple>
-                <option value="" disabled selected>Add Tags</option>
+                <option value="" disabled>Add Tags</option>
                 @foreach ($tags as $id => $tag)
-                    <option value="{{ $id }}">{{ $tag }}</option>
+                    <option value="{{ $id }}" @if (old())
+                            {{ in_array($id, old('tags') ?: []) ? 'selected' : '' }}
+                        @else
+                            {{ isset($image_tags[$id]) ? 'selected' : '' }}
+                        @endif
+                     >{{ $tag }}</option>
                 @endforeach
             </select>
             <label for="tags">Add Existing Tags</label>

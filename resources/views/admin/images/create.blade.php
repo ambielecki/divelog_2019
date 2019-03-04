@@ -12,15 +12,11 @@
                     <span class="card-title">Add New Image</span>
                     <div class="row">
                         @include('admin.images.form', [
-                            'route' => route('admin_image_create'),
+                            'route'       => route('admin_image_create'),
                             'button_text' => 'Add Image',
                         ])
                     </div>
                 </div>
-
-                {{--<div class="card-action">--}}
-                    {{--<a href="/password/reset">Forgot Password</a><a href="{{ route('register') }}">Register</a>--}}
-                {{--</div>--}}
             </div>
         </div>
     </div>
