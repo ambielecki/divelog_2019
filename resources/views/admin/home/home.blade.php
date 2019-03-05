@@ -56,7 +56,7 @@
                 <div class="col s12 m5">
                     <div class="card">
                         <div class="card-content">
-                            <span class="card-title">Edit Home Page</span>
+                            <span class="card-title">Select Images</span>
                         </div>
                     </div>{{-- End Image Picker Card --}}
                 </div>{{-- End Image Picker Column --}}
