@@ -1,18 +1,16 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
-class AddUniqueToImages extends Migration
-{
+class AddUniqueToImages extends Migration {
     /**
      * Run the migrations.
      *
      * @return void
      */
-    public function up()
-    {
+    public function up() {
         Schema::table('images', function (Blueprint $table) {
             $table->char('file_name_2', 100)->after('file_name');
         });
@@ -31,8 +29,7 @@ class AddUniqueToImages extends Migration
      *
      * @return void
      */
-    public function down()
-    {
+    public function down() {
         Schema::table('images', function (Blueprint $table) {
             //
         });

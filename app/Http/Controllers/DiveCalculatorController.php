@@ -23,18 +23,18 @@ class DiveCalculatorController extends Controller {
     public function getApiCalculation(DiveCalculatorRequest $request): JsonResponse {
         // initialize return variables
         $dive_1_max_time = null;
-        $dive_1_pg       = null;
-        $post_si_pg      = null;
-        $rnt             = null;
+        $dive_1_pg = null;
+        $post_si_pg = null;
+        $rnt = null;
         $dive_2_max_time = null;
-        $dive_2_pg       = null;
+        $dive_2_pg = null;
 
         // get variables from request
-        $dive_1_depth     = $request->input('dive_1_depth');
-        $dive_1_time      = $request->input('dive_1_time');
+        $dive_1_depth = $request->input('dive_1_depth');
+        $dive_1_time = $request->input('dive_1_time');
         $surface_interval = $request->input('surface_interval');
-        $dive_2_depth     = $request->input('dive_2_depth');
-        $dive_2_time      = $request->input('dive_2_time');
+        $dive_2_depth = $request->input('dive_2_depth');
+        $dive_2_time = $request->input('dive_2_time');
 
         $continue = true;
         $calculator = new DiveCalculator();
