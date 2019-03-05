@@ -30,4 +30,9 @@ class HomeController extends Controller {
 //            'hero_image' => $hero_image,
         ]);
     }
+
+    // this is restricted to admins in web.php
+    public function getEdit(): View {
+        return view('admin.home.home');
+    }
 }

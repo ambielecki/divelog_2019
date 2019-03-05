@@ -19,6 +19,13 @@
     <li><a href="#">Settings</a></li>
 </ul>
 
+@admin
+    <ul id="admin_dropdown" class="dropdown-content text-blue">
+        <li><a href="#">Home Page</a></li>
+        <li><a href="{{ route('admin_image_list') }}">Images</a></li>
+    </ul>
+@endadmin
+
 {{-- Main Nav Skeleton --}}
 <header>
     <nav>
@@ -31,6 +38,9 @@
                         <li><a href="{{ route('calculator') }}">Calculator</a></li>
                         <li><a href="#">Dive Log</a></li>
                         <li><a href="">Blog</a></li>
+                        @admin
+                        <li><a class="dropdown-trigger" href="#!" data-target="admin_dropdown">Admin<i class="material-icons right">arrow_drop_down</i></a></li>
+                        @endadmin
                         @if (Auth::check())
                             <li><a class="dropdown-trigger" href="#!" data-target="logout_dropdown">Welcome {{ auth()->user()->first_name }}<i class="material-icons right">arrow_drop_down</i></a></li>
                         @else
@@ -48,6 +58,21 @@
     <li><a href="{{ route('calculator') }}">Calculator</a></li>
     <li><a href="#">Dive Log</a></li>
     <li><a href="">Blog</a></li>
+    @admin
+        <ul class="collapsible" data-collapsible="accordian">
+            <li>
+                <div class="collapsible-header black-text">Admin</div>
+                <div class="collapsible-body side_nav_collapse">
+                    <ul>
+                        <li>
+                            <a href="#">Home Page</a>
+                        </li>
+                        <li><a href="{{ route('admin_image_list') }}">Images</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    @endadmin
     @if (Auth::check())
         <ul class="collapsible" data-collapsible="accordian">
             <li>

@@ -18,6 +18,11 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
         Route::post('/edit/{id}', 'ImageController@postAdminEdit');
     });
 
+    Route::group(['prefix' => 'home'], function () {
+        Route::get('/', 'HomeController@getEdit')->name('admin_home_edit');
+        Route::post('/', 'HomeController@postEdit');
+    });
+
     Route::get('logs', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index');
     Route::get('test', 'TestController@getTest');
 });

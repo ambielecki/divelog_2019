@@ -13,11 +13,11 @@ class AppServiceProvider extends ServiceProvider {
      */
     public function boot() {
         Blade::directive('admin', function () {
-            return "<?php if (Auth::user()->level <= 1): ?>";
+            return '<?php if (Auth::user()->level <= 1): ?>';
         });
 
         Blade::directive('endadmin', function () {
-            return "<?php endif; ?>";
+            return '<?php endif; ?>';
         });
     }
 
