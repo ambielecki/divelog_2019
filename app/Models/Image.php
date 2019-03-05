@@ -29,7 +29,15 @@ class Image extends Model {
             }
 
             $folder = 'images/' . date('Y-m') . '/';
-            $file_name = uniqid(date('Y-m-d') . '_', false);
+
+            $unique_check = false;
+            while (!$unique_check) {
+                $file_name = uniqid(date('Y-m-d') . '_', false);
+                if (!Image::where('file_name', $file_name . '.jpg')->count()) {
+                    $unique_check = true;
+                }
+            }
+
             $path = $folder . $file_name;
 
             // check if folder exists, if not create it
