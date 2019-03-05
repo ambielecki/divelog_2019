@@ -7,6 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class Page extends Model {
     protected $fillable = ['page_type', 'slug', 'title', 'content', 'is_active', 'revision'];
 
+    const TYPE_HOME = 'home';
+    const TYPE_BLOG = 'blog';
+
     public function getContentAttribute($value): array {
         return json_decode($value, true);
     }

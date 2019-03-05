@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Page;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
@@ -33,7 +34,17 @@ class HomeController extends Controller {
 
     // this is restricted to admins in web.php
     public function getEdit(): View {
-        return view('admin.home.home');
+        $current_page = Page::query()
+            ->where([
+                ['page_type', Page::TYPE_HOME],
+                ['is_active', 1]
+            ])
+            ->orderBy('revision', 'DESC')
+            ->first();
+
+        return view('admin.home.home', [
+            'current_page' => $current_page,
+        ]);
     }
 
     public function postEdit(Request $request) {
