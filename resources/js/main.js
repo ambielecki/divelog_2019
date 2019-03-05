@@ -1,9 +1,9 @@
+Vue.use(VueRouter);
+
+DiveLogRepeat.loadVueComponents();
+DiveLogRepeat.initVueFilters();
+
 document.addEventListener('DOMContentLoaded', function() {
-    Vue.use(VueRouter);
-
-    DiveLogRepeat.loadVueComponents();
-    DiveLogRepeat.initVueFilters();
-
     DiveLogRepeat.initSidenav();
     DiveLogRepeat.initDropdown();
     DiveLogRepeat.initCollapsible();

@@ -1,5 +1,5 @@
 {{-- Main Nav Dropdowns --}}
-@include('shared.flash_message')
+
 <ul id="login_dropdown" class="dropdown-content">
     <li><a href="{{ route('login') }}">Log In</a></li>
     <li><a href="{{ route('register') }}">Register</a></li>

@@ -1,5 +1,4 @@
 {{-- Main Nav Dropdowns --}}
-@include('shared.flash_message')
 <ul id="image_dropdown" class="dropdown-content">
     <li><a href="{{ route('admin_image_list') }}">Image List</a></li>
     <li><a href="{{ route('admin_image_create') }}">Upload Image</a></li>

@@ -3,6 +3,7 @@
 @section('layout')
     @include('main.header.header')
     <main>
+        @include('shared.flash_message')
         @yield('content')
     </main>
     @include('shared.footer')
