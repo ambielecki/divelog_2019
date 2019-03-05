@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Helpers\CommandUtility;
 use App\Http\Requests\ImageCreateRequest;
 use Exception;
 use File;
