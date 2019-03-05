@@ -17,6 +17,7 @@ mix.js('resources/js/main.js', 'public/js')
     .js('resources/js/pages/calculator.js', 'public/js/pages/calculator.js')
     .js('resources/js/helpers/heartbeat.js', 'public/js/helpers/')
     .js('resources/js/pages/images/list.js', 'public/js/pages/images/list.js')
+    .js('resources/js/pages/home/edit.js', 'public/js/pages/home/edit.js')
     .sass('resources/sass/app.scss', 'public/css')
     .sass('resources/sass/vendor.scss', 'public/css')
     .version();
