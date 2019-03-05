@@ -10,6 +10,5 @@
 @endsection
 
 @push('body_scripts')
-    {{--<script type="text/javascript" src="{{ mix('/js/main.js') }}"></script>--}}
     @stack('page_scripts')
 @endpush
