@@ -261,6 +261,6 @@
     @endif
 @stop
 
-@push('body_scripts')
+@push('page_scripts')
     <script type="text/javascript" src="{{ mix('/js/pages/calculator.js') }}"></script>
 @endpush

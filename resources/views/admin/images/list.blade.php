@@ -71,6 +71,6 @@
     </div>
 @endsection
 
-@push('body_scripts')
+@push('page_scripts')
     <script type="text/javascript" src="/js/pages/images/list.js"></script>
 @endpush

@@ -36,8 +36,7 @@
     </div>
 @endsection
 
-@push('body_scripts')
-    <script src="https://cdn.ckeditor.com/ckeditor5/12.0.0/classic/ckeditor.js"></script>
+@push('admin_scripts')
     <script type="text/javascript">
         ClassicEditor
             .create( document.querySelector( '.ck_textarea' ) )
