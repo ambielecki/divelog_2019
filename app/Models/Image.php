@@ -22,8 +22,8 @@ class Image extends Model {
         try {
             $image = InverventionImage::make($request->file('image_file'))->encode('jpg');
             $width = $image->width();
-            if ($width > 2000) {
-                $image->resize(2000, null, function ($constraint) {
+            if ($width > 3840) {
+                $image->resize(3840, null, function ($constraint) {
                     $constraint->aspectRatio();
                 });
             }

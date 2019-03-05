@@ -8,7 +8,8 @@ use App\Models\Task;
 use Exception;
 use File;
 use Illuminate\Console\Command;
-use Intervention\Image\Facades\Image as InterventionImage;
+use Intervention\Image\Image as InterventionImage;
+use Intervention\Image\ImageManager;
 use Log;
 
 class ResizeImage extends Command {
@@ -34,69 +35,24 @@ class ResizeImage extends Command {
         $task->tries++;
         $task->save();
 
-        $image = Image::find($task->options['image_id']);
-        $this->line("Found image id: $image->id");
+        $image_record = Image::find($task->options['image_id']);
+        $this->line("Found image id: $image_record->id");
 
-        $intervention_image = InterventionImage::make(File::get(public_path($image->folder . $image->file_name)));
-
-        $small_folder = $image->folder . 'small/';
-        $medium_folder = $image->folder . 'medium/';
-        $large_folder = $image->folder . 'large/';
-        $xl_folder = $image->folder . 'xl/';
+        $manager = new ImageManager(['driver' => 'gd',]);
+        $image = $manager->make(File::get(public_path($image_record->folder . $image_record->file_name)));
 
         try {
-            if (!File::exists(public_path($xl_folder))) {
-                File::makeDirectory(public_path($xl_folder));
+            $image->backup();
+            if ($image_record->has_high_res) {
+                $this->createImage($image, '3840', $image_record->folder . 'xl/', $image_record->file_name);
             }
 
-            if ($image->has_high_res) {
-                $xl_image = $intervention_image;
-                $xl_image->resize('3840', null, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
+            $this->createImage($image, '1920', $image_record->folder . 'large/', $image_record->file_name);
+            $this->createImage($image, '1080', $image_record->folder . 'medium/', $image_record->file_name);
+            $this->createImage($image, '600', $image_record->folder . 'small/', $image_record->file_name);
 
-                $xl_image->save(public_path($xl_folder . $image->file_name), 70);
-                unset($xl_image);
-            }
-
-            if (!File::exists(public_path($large_folder))) {
-                File::makeDirectory(public_path($large_folder));
-            }
-
-            $large_image = $intervention_image;
-            $large_image->resize('1920', null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-
-            $large_image->save(public_path($large_folder . $image->file_name), 70);
-            unset($large_image);
-
-            if (!File::exists(public_path($medium_folder))) {
-                File::makeDirectory(public_path($medium_folder));
-            }
-
-            $medium_image = $intervention_image;
-            $medium_image->resize('1080', null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-
-            $medium_image->save(public_path($medium_folder . $image->file_name), 70);
-            unset($medium_image);
-
-            if (!File::exists(public_path($small_folder))) {
-                File::makeDirectory(public_path($small_folder));
-            }
-
-            $small_image = $intervention_image;
-            $small_image->resize('600', null, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-
-            $small_image->save(public_path($small_folder . $image->file_name), 70);
-            unset($small_image);
-
-            $image->has_sizes = 1;
-            $image->save();
+            $image_record->has_sizes = 1;
+            $image_record->save();
 
             $task->status = Task::STATUS_COMPLETE;
         } catch (Exception $exception) {
@@ -105,5 +61,18 @@ class ResizeImage extends Command {
         }
 
         $task->save();
+    }
+
+    private function createImage(InterventionImage $image, string $width, string $folder, string $file_name): void {
+        if (!File::exists(public_path($folder))) {
+            File::makeDirectory(public_path($folder));
+        }
+
+        $image->resize($width, null, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+
+        $image->save(public_path($folder . $file_name), 70);
+        $image->reset();
     }
 }
