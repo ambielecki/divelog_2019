@@ -18,11 +18,11 @@
 
                             <div class="input-field col s6">
                                 <select @change="getImageList()" v-model="limit" class="material_select">
-                                    {{--<option value="" disabled selected>Set Limit (default 20)</option>--}}
                                     <option value="20" selected>20</option>
                                     <option value="60">60</option>
                                     <option value="100">100</option>
                                 </select>
+                                <label>Limit</label>
                             </div>
                         </div>
 

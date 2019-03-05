@@ -74,7 +74,7 @@
     <div class="row">
         <div class="col s12">
             <label>
-                <input type="checkbox" name="is_hero" {{ old('is_hero', $image->is_hero) ? 'checked' : '' }}>
+                <input type="checkbox" name="is_hero" value="1" {{ old('is_hero', $image->is_hero) ? 'checked' : '' }}>
                 <span>Hero Image</span>
             </label>
         </div>

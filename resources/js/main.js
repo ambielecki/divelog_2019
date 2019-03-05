@@ -1,23 +1,3 @@
-Vue.use(VueRouter);
-
-DiveLogRepeat.loadVueComponents();
-DiveLogRepeat.initVueFilters();
-
-document.addEventListener('DOMContentLoaded', function() {
-    DiveLogRepeat.initSidenav();
-    DiveLogRepeat.initDropdown();
-    DiveLogRepeat.initCollapsible();
-    DiveLogRepeat.initCarousel({
-        fullWidth: true,
-        indicators: true
-    });
-    DiveLogRepeat.initSelects();
-    DiveLogRepeat.initTableCrosshair();
-    DiveLogRepeat.initFlashMessage();
-    DiveLogRepeat.initHeartbeat();
-    Materialize.updateTextFields();
-});
-
 window.DiveLogRepeat = {
     // Credit David Walsh (https://davidwalsh.name/javascript-debounce-function)
 
@@ -158,3 +138,22 @@ window.DiveLogRepeat = {
         })
     }
 };
+
+DiveLogRepeat.loadVueComponents();
+DiveLogRepeat.initVueFilters();
+Vue.use(VueRouter);
+
+document.addEventListener('DOMContentLoaded', function() {
+    DiveLogRepeat.initSidenav();
+    DiveLogRepeat.initDropdown();
+    DiveLogRepeat.initCollapsible();
+    DiveLogRepeat.initCarousel({
+        fullWidth: true,
+        indicators: true
+    });
+    DiveLogRepeat.initSelects();
+    DiveLogRepeat.initTableCrosshair();
+    DiveLogRepeat.initFlashMessage();
+    DiveLogRepeat.initHeartbeat();
+    Materialize.updateTextFields();
+});

@@ -80,6 +80,7 @@ class ImageController extends Controller {
         $image = Image::find($id);
         $image->title = $request->input('title');
         $image->description = $request->input('description');
+        $image->is_hero = $request->input('is_hero') ? 1 : 0;
 
         if ($image->save()) {
             if ($request->input('new_tags')) {
