@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Image;
 use App\Models\Page;
+use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class HomeController extends Controller {
@@ -34,5 +34,11 @@ class HomeController extends Controller {
     // this is restricted to admins in web.php
     public function getEdit(): View {
         return view('admin.home.home');
+    }
+
+    public function postEdit(Request $request) {
+        $test = 'test';
+
+        return redirect()->route('admin_home_edit');
     }
 }
