@@ -10,7 +10,6 @@ use Session;
 class HomeController extends Controller {
     public function getHome(): View {
         $page = HomePage::where([
-            ['page_type', HomePage::PAGE_TYPE],
             ['is_active', true],
         ])
             ->orderBy('revision', 'DESC')
@@ -39,7 +38,6 @@ class HomeController extends Controller {
         } else {
             $current_page = HomePage::query()
                 ->where([
-                    ['page_type', HomePage::PAGE_TYPE],
                     ['is_active', 1],
                 ])
                 ->orderBy('revision', 'DESC')
@@ -54,7 +52,6 @@ class HomeController extends Controller {
 
     public function postEdit(Request $request) {
         $last_page = HomePage::query()
-            ->where('page_type', HomePage::PAGE_TYPE)
             ->orderBy('id', 'DESC')
             ->first();
 
@@ -67,6 +64,7 @@ class HomeController extends Controller {
         $page->title = $request->input('title');
 
         if ($page->save()) {
+            $id = $page->id;
             Session::flash('flash_success', 'Home Page Saved');
         } else {
             Session::flash('flash_error', 'Error Saving Home Page');

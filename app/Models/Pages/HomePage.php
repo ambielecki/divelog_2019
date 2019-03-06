@@ -4,9 +4,16 @@ namespace App\Models\Pages;
 
 use App\Models\Image;
 use App\Models\Page;
+use App\Scopes\HomePageScope;
 
 class HomePage extends Page {
     const PAGE_TYPE = 'home';
+
+    protected static function boot() {
+        parent::boot();
+
+        static::addGlobalScope(new HomePageScope());
+    }
 
     public function getContentAttribute($value): array {
         $content = json_decode($value, true);
