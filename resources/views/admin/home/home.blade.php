@@ -17,26 +17,63 @@
                             <input type="hidden" name="id" value="{{ $current_page->id }}">
 
                             <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="title" name="title" type="text" value="{{ old('title', $current_page->title) }}">
+                                    <label for="title">Page Title</label>
+                                    @if ($errors->has('title'))
+                                        <span class="red-text">
+                                            <strong>{{ $errors->first('title') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="input-field col s12 m4">
                                     <label>
-                                        <input name="uses_hero_image" type="checkbox" value="1">
+                                        <input name="content[uses_hero_image]" type="checkbox" value="1" {{ old('content.uses_hero_image', $content['uses_hero_image']) ? 'checked' : '' }}>
                                         <span>Use Hero Image</span>
                                     </label>
                                 </div>
 
                                 <div class="col s12 m8">
                                     <img v-if="display_hero_path" :src="display_hero_path" class="responsive-img">
+                                    <input type="hidden" name="content[hero_image][id]" value="{{ old('content.hero_image.id', $content['uses_hero_image'] ? $content['hero_image']['id'] : '') }}">
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input id="title" name="title" type="text" value="{{ old('title', $current_page->title) }}">
-                                    <label for="title">Title</label>
-                                    @if ($errors->has('title'))
+                                    <input id="hero_title" name="content[hero_image][title]" type="text" value="{{ old('content.hero_image.title', $content['uses_hero_image'] ? $content['hero_image']['title'] : '') }}">
+                                    <label for="hero_title">Hero Image Title</label>
+                                    @if ($errors->has('content.hero_image.title'))
                                         <span class="red-text">
-                                        <strong>{{ $errors->first('title') }}</strong>
-                                    </span>
+                                            <strong>{{ $errors->first('content.hero_image.title') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="hero_caption" name="content[hero_image][caption]" type="text" value="{{ old('content.hero_image.caption', $content['uses_hero_image'] ? $content['hero_image']['caption'] : '') }}">
+                                    <label for="hero_caption">Hero Image Alt Text</label>
+                                    @if ($errors->has('content.hero_image.caption'))
+                                        <span class="red-text">
+                                            <strong>{{ $errors->first('content.hero_image.caption') }}</strong>
+                                        </span>
+                                    @endif
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="input-field col s12">
+                                    <input id="content_title" name="content[title]" type="text" value="{{ old('content.title', $content['title']) }}">
+                                    <label for="title">Content Title</label>
+                                    @if ($errors->has('content.title'))
+                                        <span class="red-text">
+                                            <strong>{{ $errors->first('content.title') }}</strong>
+                                        </span>
                                     @endif
                                 </div>
                             </div>

@@ -1,7 +1,7 @@
 @extends('layouts.main')
 
 @section('title')
-    {{ $page['title'] ?? 'Home - DiveLogRepeat' }}
+    {{ $page['title'] ?: 'DiveLogRepeat - Home' }}
 @endsection
 
 @section('content')
