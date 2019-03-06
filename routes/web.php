@@ -19,7 +19,7 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
     });
 
     Route::group(['prefix' => 'home'], function () {
-        Route::get('/', 'HomeController@getEdit')->name('admin_home_edit');
+        Route::get('/{id?}', 'HomeController@getEdit')->name('admin_home_edit');
         Route::post('/', 'HomeController@postEdit');
     });
 

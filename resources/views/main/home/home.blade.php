@@ -27,10 +27,10 @@
                         <div class="col m4 s12 pull-m8">
                             @if (!empty($content['carousel_images']))
                                 <div class="carousel carousel-slider center">
-                                    @foreach ($content['carousel_images'] as $image)
-                                        <a class="carousel-item" href="{{ $image['path'] }}">
-                                            <h5 class="carousel_text white-text">{{ $image['title'] }}</h5>
-                                            <img src="{{ $image['path'] }}" alt="{{ $image['caption'] ?? 'DiveLogRepeat' }}" title="{{ $image['title'] }}">
+                                    @foreach ($content['carousel_images']['images'] as $image)
+                                        <a class="carousel-item" href="/{{ $image['folder'] }}{{ $image['file_name'] }}">
+                                            {{--<h5 class="carousel_text white-text">{{ $image['title'] }}</h5>--}}
+                                            <img src="/{{ $image['folder'] }}{{ $image['has_sizes'] ? 'medium/' : '' }}{{ $image['file_name'] }}" alt="{{ $image['description'] ?? 'DiveLogRepeat' }}" title="{{ $image['title'] }}">
                                         </a>
                                     @endforeach
                                 </div>

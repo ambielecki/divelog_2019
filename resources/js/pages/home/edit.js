@@ -1,10 +1,12 @@
 let app = new Vue({
     el: '#home_edit_app',
     data: {
+        carousel_images: {},
         count: null,
         current_content: {},
         current_page: {},
         display_hero_path: '',
+        hero_image_id: '',
         images: [],
         image_destination: 'for_carousel',
         images_loading: false,
@@ -14,19 +16,69 @@ let app = new Vue({
         search: null,
         selected_image: {},
     },
+    computed: {
+        carousel_list: function () {
+            let ids = [];
+
+            if (this.carousel_images.hasOwnProperty('images')) {
+                this.carousel_images.images.forEach(function (image) {
+                    ids.push(image.id);
+                });
+            }
+
+            return ids.join();
+        }
+    },
     mounted: function () {
         this.current_page = HomeEdit.current_page;
         this.current_content = HomeEdit.current_content;
-        if (this.current_content.hasOwnProperty('hero_image')) {
-            this.display_hero_path = '/' +this.current_content.hero_image.folder + this.current_content.hero_image.file_name;
+        if (HomeEdit.current_content.hasOwnProperty('hero_image')) {
+            this.display_hero_path = '/' + HomeEdit.current_content.hero_image.folder + HomeEdit.current_content.hero_image.file_name;
         }
+
+        if (HomeEdit.current_content.hasOwnProperty('carousel_images')) {
+            this.carousel_images = HomeEdit.current_content.carousel_images;
+        }
+
+        this.hero_image_id = document
+            .querySelector('#content_hero_image_id')
+            .dataset
+            .initial_value;
 
         this.getImageList();
     },
     methods: {
         imageThumbClick(clicked_image) {
             this.selected_image = clicked_image;
-            console.log('click')
+
+            if (this.image_destination === 'for_hero') {
+                this.hero_image_id = clicked_image.id;
+                this.display_hero_path = '/' + clicked_image.folder + clicked_image.file_name;
+            } else {
+                let add = true;
+
+                this.carousel_images.images.forEach(function (image) {
+                    if (image.id === clicked_image.id) {
+                        add = false;
+                    }
+                });
+
+                if (add) {
+                    this.carousel_images.images.push(clicked_image);
+                }
+            }
+        },
+
+        carouselClick(clicked_image) {
+            let index_to_remove = null;
+
+            this.carousel_images.images.forEach(function (image, index) {
+                if (image.id === clicked_image.id) {
+                    index_to_remove = index;
+                }
+            });
+
+            this.carousel_images.images.splice(index_to_remove, 1);
         },
 
         paginationClick(page) {

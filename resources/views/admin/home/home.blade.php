@@ -10,7 +10,7 @@
             <div class="col s12 m5 offset-m1">
                 <div class="card">
                     <div class="card-content">
-                        <span class="card-title">Edit Home Page</span>
+                        <span class="card-title">Edit Home Page - Revision {{ $current_page->revision }}</span>
 
                         <form action="{{ route('admin_home_edit') }}" method="POST">
                             {{ csrf_field() }}
@@ -38,7 +38,14 @@
 
                                 <div class="col s12 m8">
                                     <img v-if="display_hero_path" :src="display_hero_path" class="responsive-img">
-                                    <input type="hidden" name="content[hero_image][id]" value="{{ old('content.hero_image.id', $content['uses_hero_image'] ? $content['hero_image']['id'] : '') }}">
+                                    <input
+                                        type="hidden"
+                                        v-model="hero_image_id"
+                                        name="content[hero_image][id]"
+                                        id="content_hero_image_id"
+                                        value=""
+                                        data-initial_value="{{ old('content.hero_image.id', $content['uses_hero_image'] ? $content['hero_image']['id'] : '') }}"
+                                    >
                                 </div>
                             </div>
 
@@ -93,8 +100,27 @@
                             </div>
 
                             <div class="row">
+                                <div class="col s12"><span class="fake_label grey-text">Carousel Images</span></div>
+                            </div>
+                            <div class="row">
+                                <input
+                                    id="content_carousel_images"
+                                    name="content[carousel_images][ids]"
+                                    type="hidden"
+                                    value="{{ old('content.carousel_images', $content['carousel_images']['ids'] ?: '') }}"
+                                    v-model="carousel_list"
+                                >
+                                <image-thumbnail
+                                    v-for="image in carousel_images.images"
+                                    :class="'col s3'"
+                                    :image="image"
+                                    @image_clicked="carouselClick"
+                                ></image-thumbnail>
+                            </div>
+
+                            <div class="row">
                                 <div class="col s12">
-                                    <button class="btn waves-effect waves-light" type="submit" name="action">Test
+                                    <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                                         <i class="material-icons right">send</i>
                                     </button>
                                 </div>

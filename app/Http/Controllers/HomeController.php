@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pages\HomePage;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Session;
 
 class HomeController extends Controller {
     public function getHome(): View {
@@ -32,14 +33,18 @@ class HomeController extends Controller {
     }
 
     // this is restricted to admins in web.php
-    public function getEdit(): View {
-        $current_page = HomePage::query()
-            ->where([
-                ['page_type', HomePage::PAGE_TYPE],
-                ['is_active', 1],
-            ])
-            ->orderBy('revision', 'DESC')
-            ->first();
+    public function getEdit($id = null): View {
+        if ($id) {
+            $current_page = HomePage::find($id);
+        } else {
+            $current_page = HomePage::query()
+                ->where([
+                    ['page_type', HomePage::PAGE_TYPE],
+                    ['is_active', 1],
+                ])
+                ->orderBy('revision', 'DESC')
+                ->first();
+        }
 
         return view('admin.home.home', [
             'current_page' => $current_page,
@@ -48,7 +53,24 @@ class HomeController extends Controller {
     }
 
     public function postEdit(Request $request) {
-        $test = 'test';
+        $last_page = HomePage::query()
+            ->where('page_type', HomePage::PAGE_TYPE)
+            ->orderBy('id', 'DESC')
+            ->first();
+
+        $page = new HomePage();
+        $page->page_type = HomePage::PAGE_TYPE;
+        $page->slug = '/';
+        $page->revision = $last_page->revision + 1;
+        $page->is_active = 1;
+        $page->content = $request->input('content');
+        $page->title = $request->input('title');
+
+        if ($page->save()) {
+            Session::flash('flash_success', 'Home Page Saved');
+        } else {
+            Session::flash('flash_error', 'Error Saving Home Page');
+        }
 
         return redirect()->route('admin_home_edit');
     }
