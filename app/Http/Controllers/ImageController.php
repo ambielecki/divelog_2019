@@ -113,6 +113,10 @@ class ImageController extends Controller {
             ->with('tags')
             ->orderBy('id', 'DESC');
 
+        if ($request->get('is_hero')) {
+            $query = $query->where('is_hero', $request->get('is_hero') === 'true' ? 1 : 0);
+        }
+
         if ($search) {
             $search = '%' . $search . '%';
             $query = $query->where('title', 'LIKE', $search)

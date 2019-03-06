@@ -32,7 +32,7 @@
                     <a href="/" class="brand-logo">DiveLogRepeat</a>
                     <a href="#" data-target="mobile_nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
-                        <li><a href="#">Home Page</a></li>
+                        <li><a href="{{ route('admin_home_edit') }}">Home Page</a></li>
                         <li><a class="dropdown-trigger" href="#!" data-target="image_dropdown">Images<i class="material-icons right">arrow_drop_down</i></a></li>
                         @if (Auth::check())
                             <li><a class="dropdown-trigger" href="#!" data-target="logout_dropdown">Welcome {{ auth()->user()->first_name }}<i class="material-icons right">arrow_drop_down</i></a></li>
@@ -48,7 +48,7 @@
 
 {{-- Mobile Nav --}}
 <ul class="sidenav" id="mobile_nav">
-    <li><a href="#">Home Page</a></li>
+    <li><a href="{{ route('admin_home_edit') }}">Home Page</a></li>
     <ul class="collapsible" data-collapsible="accordian">
         <li>
             <div class="collapsible-header black-text">Images</div>

@@ -21,7 +21,7 @@
 
 @admin
     <ul id="admin_dropdown" class="dropdown-content text-blue">
-        <li><a href="#">Home Page</a></li>
+        <li><a href="{{ route('admin_home_edit') }}">Home Page</a></li>
         <li><a href="{{ route('admin_image_list') }}">Images</a></li>
     </ul>
 @endadmin
@@ -64,9 +64,7 @@
                 <div class="collapsible-header black-text">Admin</div>
                 <div class="collapsible-body side_nav_collapse">
                     <ul>
-                        <li>
-                            <a href="#">Home Page</a>
-                        </li>
+                        <li><a href="{{ route('admin_home_edit') }}">Home Page</a></li>
                         <li><a href="{{ route('admin_image_list') }}">Images</a></li>
                     </ul>
                 </div>

@@ -1,16 +1,26 @@
 let app = new Vue({
     el: '#home_edit_app',
     data: {
+        count: null,
+        current_content: {},
+        current_page: {},
+        display_hero_path: '',
         images: [],
+        image_destination: 'for_carousel',
         images_loading: false,
-        selected_image: {},
+        limit: 20,
         page: 1,
         pages: null,
-        limit: 20,
-        count: null,
         search: null,
+        selected_image: {},
     },
     mounted: function () {
+        this.current_page = HomeEdit.current_page;
+        this.current_content = HomeEdit.current_content;
+        if (this.current_content.hasOwnProperty('hero_image')) {
+            this.display_hero_path = '/' +this.current_content.hero_image.folder + this.current_content.hero_image.file_name;
+        }
+
         this.getImageList();
     },
     methods: {
@@ -31,6 +41,7 @@ let app = new Vue({
                     page: this.page,
                     limit: this.limit,
                     search: this.search,
+                    is_hero: this.image_destination === 'for_hero',
                 }
             }).then(function (response) {
                 app.images_loading = false;

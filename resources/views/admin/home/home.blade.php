@@ -17,6 +17,19 @@
                             <input type="hidden" name="id" value="{{ $current_page->id }}">
 
                             <div class="row">
+                                <div class="input-field col s12 m4">
+                                    <label>
+                                        <input name="uses_hero_image" type="checkbox" value="1">
+                                        <span>Use Hero Image</span>
+                                    </label>
+                                </div>
+
+                                <div class="col s12 m8">
+                                    <img v-if="display_hero_path" :src="display_hero_path" class="responsive-img">
+                                </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="input-field col s12">
                                     <input id="title" name="title" type="text" value="{{ old('title', $current_page->title) }}">
                                     <label for="title">Title</label>
@@ -31,7 +44,7 @@
                             <div class="row">
                                 <div class="input-field col s12">
                                     <textarea id="content_content" name="content[content]" class="ck_textarea">
-                                        {{ old('content.content', $current_page['content']['content'] ?: '') }}
+                                        {{ old('content.content', $content['content'] ?: '') }}
                                     </textarea>
                                     <label for="content_content">Main Content</label>
                                     @if ($errors->has('content.content'))
@@ -74,6 +87,33 @@
                             </div>
                         </div>
 
+                        <div class="row">
+                            <div class="col s6 m3">
+                                <label>
+                                    <input
+                                        name="image_destination"
+                                        type="radio"
+                                        value="for_hero"
+                                        v-model="image_destination"
+                                        @change="getImageList"
+                                    >
+                                    <span>For Hero</span>
+                                </label>
+                            </div>
+                            <div class="col s6 m3">
+                                <label>
+                                    <input
+                                        name="image_destination"
+                                        type="radio"
+                                        value="for_carousel"
+                                        v-model="image_destination"
+                                        @change="getImageList"
+                                    >
+                                    <span>For Carousel</span>
+                                </label>
+                            </div>
+                        </div>
+
                         <div v-if="!images_loading && images.length !== 0" class="row">
                             <image-thumbnail
                                 v-for="image in images"
@@ -113,6 +153,11 @@
 
 @push('page_scripts')
     <script type="text/javascript">
+        HomeEdit = {
+            current_page: JSON.parse('{!! json_encode($current_page) !!}'),
+            current_content: JSON.parse('{!! json_encode($content) !!}'),
+        };
+
         ClassicEditor
             .create(document.querySelector( '.ck_textarea' ))
             .catch(error => {
