@@ -119,6 +119,17 @@
                             </div>
 
                             <div class="row">
+                                <div class="input-field col s12 m6">
+                                    <select id="content_blog_posts" name="content[blog_posts]" class="material_select">
+                                        @for ($i = 0; $i <= 5; $i++)
+                                            <option value="{{ $i }}" {{ (isset($content['blog_posts']) && $i == $content['blog_posts']) ? 'selected' : '' }}>{{ $i }}</option>
+                                        @endfor
+                                    </select>
+                                    <label for="content_blog_posts">Number of Blog Posts</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
                                 <div class="col s12">
                                     <button class="btn waves-effect waves-light" type="submit" name="action">Submit
                                         <i class="material-icons right">send</i>

@@ -9,7 +9,7 @@
         <div class="row hero_image_block">
             <img class="hero_image" alt="{{ $content['hero_image']['caption'] ?? 'Welcome To DiveLogRepeat' }}" src="/{{ $content['hero_image']['folder'] . $content['hero_image']['file_name'] }}">
             <div class="hero_text">
-                {{ $content['hero_image']['title'] ?? 'Welcome To DiveLogRepeat' }}
+                {{ $content['hero_image']['title'] ?: 'Welcome To DiveLogRepeat' }}
             </div>
         </div>
     @endif
