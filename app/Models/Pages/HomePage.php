@@ -9,7 +9,7 @@ use App\Scopes\HomePageScope;
 class HomePage extends Page {
     const PAGE_TYPE = 'home';
 
-    protected static function boot() {
+    protected static function boot(): void {
         parent::boot();
 
         static::addGlobalScope(new HomePageScope());
