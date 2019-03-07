@@ -13,6 +13,11 @@ class HomePage extends Page {
         parent::boot();
 
         static::addGlobalScope(new HomePageScope());
+
+        static::creating(function ($query) {
+            $query->page_type = self::PAGE_TYPE;
+            $query->slug = '/';
+        });
     }
 
     public function getContentAttribute($value): array {

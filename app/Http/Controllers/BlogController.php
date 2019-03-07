@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pages\BlogPage;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -9,12 +10,13 @@ use Illuminate\View\View;
 class BlogController extends Controller {
     public function getAdminList(): View {
 
-        return view('');
+        return view('admin.blog.list');
     }
 
     public function getAdminCreate(): View {
+        $page = new BlogPage();
 
-        return view('');
+        return view('admin.blog.create', ['page' => $page]);
     }
 
     public function postAdminCreate(Request $request): RedirectResponse {
@@ -24,7 +26,7 @@ class BlogController extends Controller {
 
     public function getAdminEdit($id): View {
 
-        return view('');
+        return view('admin.blog.edit');
     }
 
     public function postAdminEdit(Request $request, $id): RedirectResponse {

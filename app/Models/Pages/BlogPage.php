@@ -13,6 +13,10 @@ class BlogPage extends Page {
         parent::boot();
 
         static::addGlobalScope(new BlogPageScope());
+
+        static::creating(function ($query) {
+            $query->page_type = self::PAGE_TYPE;
+        });
     }
 
     public function getContentAttribute($value): array {

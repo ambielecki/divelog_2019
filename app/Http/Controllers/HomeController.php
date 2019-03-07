@@ -56,8 +56,6 @@ class HomeController extends Controller {
             ->first();
 
         $page = new HomePage();
-        $page->page_type = HomePage::PAGE_TYPE;
-        $page->slug = '/';
         $page->revision = $last_page->revision + 1;
         $page->is_active = 1;
         $page->content = $request->input('content');
