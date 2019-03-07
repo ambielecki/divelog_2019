@@ -38,6 +38,11 @@ let app = new Vue({
 
         if (HomeEdit.current_content.hasOwnProperty('carousel_images')) {
             this.carousel_images = HomeEdit.current_content.carousel_images;
+            if (!HomeEdit.current_content.carousel_images.hasOwnProperty('images')) {
+                this.$set(this.carousel_images, 'images', []);
+            }
+
+            this.carousel_images = HomeEdit.current_content.carousel_images;
         }
 
         this.hero_image_id = document

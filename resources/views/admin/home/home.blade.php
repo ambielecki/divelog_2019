@@ -31,7 +31,7 @@
                             <div class="row">
                                 <div class="input-field col s12 m4">
                                     <label>
-                                        <input name="content[uses_hero_image]" type="checkbox" value="1" {{ old('content.uses_hero_image', $content['uses_hero_image']) ? 'checked' : '' }}>
+                                        <input name="content[uses_hero_image]" type="checkbox" value="1" {{ old('content.uses_hero_image', !empty($content['uses_hero_image'])) ? 'checked' : '' }}>
                                         <span>Use Hero Image</span>
                                     </label>
                                 </div>
@@ -44,14 +44,14 @@
                                         name="content[hero_image][id]"
                                         id="content_hero_image_id"
                                         value=""
-                                        data-initial_value="{{ old('content.hero_image.id', $content['uses_hero_image'] ? $content['hero_image']['id'] : '') }}"
+                                        data-initial_value="{{ old('content.hero_image.id', !empty($content['uses_hero_image']) ? $content['hero_image']['id'] : '') }}"
                                     >
                                 </div>
                             </div>
 
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input id="hero_title" name="content[hero_image][title]" type="text" value="{{ old('content.hero_image.title', $content['uses_hero_image'] ? $content['hero_image']['title'] : '') }}">
+                                    <input id="hero_title" name="content[hero_image][title]" type="text" value="{{ old('content.hero_image.title', !empty($content['uses_hero_image']) ? $content['hero_image']['title'] : '') }}">
                                     <label for="hero_title">Hero Image Title</label>
                                     @if ($errors->has('content.hero_image.title'))
                                         <span class="red-text">
@@ -63,7 +63,7 @@
 
                             <div class="row">
                                 <div class="input-field col s12">
-                                    <input id="hero_caption" name="content[hero_image][caption]" type="text" value="{{ old('content.hero_image.caption', $content['uses_hero_image'] ? $content['hero_image']['caption'] : '') }}">
+                                    <input id="hero_caption" name="content[hero_image][caption]" type="text" value="{{ old('content.hero_image.caption', !empty($content['uses_hero_image']) ? $content['hero_image']['caption'] : '') }}">
                                     <label for="hero_caption">Hero Image Alt Text</label>
                                     @if ($errors->has('content.hero_image.caption'))
                                         <span class="red-text">
@@ -107,7 +107,7 @@
                                     id="content_carousel_images"
                                     name="content[carousel_images][ids]"
                                     type="hidden"
-                                    value="{{ old('content.carousel_images', $content['carousel_images']['ids'] ?: '') }}"
+                                    value="{{ old('content.carousel_images', $content['carousel_images']['ids'] ?? '') }}"
                                     v-model="carousel_list"
                                 >
                                 <image-thumbnail

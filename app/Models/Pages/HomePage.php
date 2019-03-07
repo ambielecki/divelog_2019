@@ -25,7 +25,7 @@ class HomePage extends Page {
             $content['hero_image'] = array_merge($hero_image, $content['hero_image']);
         }
 
-        if (isset($content['carousel_images'])) {
+        if (isset($content['carousel_images']['ids'])) {
             $ids = explode(',', $content['carousel_images']['ids']);
             $carousel_images = Image::query()
                 ->whereIn('id', $ids)
