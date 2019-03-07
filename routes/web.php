@@ -46,5 +46,9 @@ Route::group(['prefix' => '/api'], function () {
             Route::get('/', 'ImageController@getAdminApiList')->name('api_admin_image_list');
             Route::get('/{id}', 'ImageController@getAdminApiDetail')->name('api_admin_image_detail');
         });
+
+        Route::group(['prefix' => '/blog'], function () {
+            Route::post('/slug-check', 'BlogController@postAdminApiSlugCheck')->name('api_admin_blog_slug_check');
+        });
     });
 });

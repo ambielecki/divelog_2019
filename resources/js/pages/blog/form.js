@@ -10,6 +10,7 @@ let app = new Vue({
         pages: null,
         search: null,
         selected_image: {},
+        slug: '',
     },
     mounted: function () {
         this.getImageList();
@@ -56,7 +57,25 @@ let app = new Vue({
         }, 500),
 
         checkSlug: DiveLogRepeat.debounce(function () {
-
+            let title = document.querySelector('#title').value;
+            Vue.set(app.errors, 'title', '');
+            Axios.post('/api/admin/blog/slug-check', {
+                title: title,
+            }).then(function (response) {
+                Vue.set(app.errors, 'title', response.data.error ? 'Slug already in use, please try a different title' : '');
+                app.slug = response.data.slug;
+                Materialize.updateTextFields();
+            }).catch(function (error) {
+                console.log(error);
+            });
         }, 500),
     },
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+    ClassicEditor
+        .create(document.querySelector( '.ck_textarea' ))
+        .catch(error => {
+            console.error(error);
+        });
 });

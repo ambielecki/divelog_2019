@@ -41,4 +41,17 @@ class BlogPage extends Page {
 
         return $content;
     }
+
+    public static function getSlug(string $title): string {
+        $slug = strtolower($title);
+        $slug = str_replace("'", '', $slug);
+        $slug = preg_replace('~[^\\pL0-9_]+~u', '-', $slug);
+        $slug = preg_replace('~[^-a-z0-9_]+~', '', $slug);
+
+        return $slug;
+    }
+
+    public static function checkSlug(string $title): bool {
+        return self::where('title', $title)->count() === 0;
+    }
 }
