@@ -21,9 +21,9 @@ class AppServiceProvider extends ServiceProvider {
             return '<?php endif; ?>';
         });
 
-//        Validator::extend('unique_slug', function ($attribute, $value, $parameters, $validator) {
-//            $model = ;
-//        });
+        Validator::extend('unique_slug', function ($attribute, $value, $parameters, $validator) {
+            return true;
+        });
     }
 
     /**

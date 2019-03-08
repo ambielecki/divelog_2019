@@ -54,7 +54,12 @@ class BlogPage extends Page {
     }
 
     public static function checkSlug(string $slug): bool {
-        return self::where('slug', $slug)->count() === 0;
+        return self::query()
+            ->where([
+                ['slug', $slug],
+                ['is_active', 1]
+            ])
+            ->count() === 0;
     }
 
     public static function getImageIds($content): array {

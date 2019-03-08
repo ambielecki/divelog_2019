@@ -54,7 +54,7 @@
                         <div class="row">
                             <div class="col s12">
                                 <label>
-                                    <input type="checkbox" name="is_active" value="1" {{ $page->is_active ? 'checked' : '' }}>
+                                    <input type="checkbox" name="is_active" value="1" {{ old('is_active', $page->is_active) ? 'checked' : '' }}>
                                     <span>Set Active</span>
                                 </label>
                             </div>

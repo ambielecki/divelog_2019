@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\BlogRequest;
 use App\Models\Pages\BlogPage;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
@@ -61,7 +62,7 @@ class BlogController extends Controller {
         ]);
     }
 
-    public function postAdminCreate(Request $request): RedirectResponse {
+    public function postAdminCreate(BlogRequest $request): RedirectResponse {
         $slug = BlogPage::getSlug($request->input('title'));
 
         if (!BlogPage::checkSlug($slug)) {
@@ -93,7 +94,7 @@ class BlogController extends Controller {
         ]);
     }
 
-    public function postAdminEdit(Request $request, $id): RedirectResponse {
+    public function postAdminEdit(BlogRequest $request, $id): RedirectResponse {
 
         return redirect()->route('admin_blog_edit', ['id' => $id]);
     }
