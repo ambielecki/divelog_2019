@@ -9,6 +9,18 @@ use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class BlogController extends Controller {
+    public function getView($slug): View {
+        return view('main.blog.view');
+    }
+
+    public function getList($slug): View {
+        return view('main.blog.list');
+    }
+
+    public function getApiList(Request $request): JsonResponse {
+        return response()->json();
+    }
+
     public function getAdminList(): View {
 
         return view('admin.blog.list');
@@ -29,6 +41,8 @@ class BlogController extends Controller {
 
         if ($matches) {
             $ids = array_map('trim', $matches[1]);
+        } else {
+            $ids = [];
         }
 
         return redirect()->route('admin_blog_create');

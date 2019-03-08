@@ -5,7 +5,11 @@ Auth::routes();
 Route::get('calculator', 'DiveCalculatorController@getIndex')->name('calculator');
 
 Route::get('/', 'HomeController@getHome')->name('home');
-Route::get('/image/{folder}/{file_name}', 'ImageController@getImage')->name('images');
+
+Route::group(['prefix' => '/blog'], function () {
+    Route::get('/list', 'BlogController@getList')->name('blog_list');
+    Route::get('/view/{slug}', 'BlogController@getView')->name('blog_view');
+});
 
 Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
     Route::get('/', 'AdminController@getIndex')->name('admin');
@@ -38,6 +42,10 @@ Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
 // web api group
 Route::group(['prefix' => '/api'], function () {
     Route::post('/heartbeat', 'HeartbeatController@postHeartbeat');
+
+    Route::group(['prefix' => '/blog'], function () {
+        Route::get('/list', 'BlogController@getApiList');
+    });
 
     // admin api routes
     Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
