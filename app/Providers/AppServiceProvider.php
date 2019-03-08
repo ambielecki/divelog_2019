@@ -20,10 +20,6 @@ class AppServiceProvider extends ServiceProvider {
         Blade::directive('endadmin', function () {
             return '<?php endif; ?>';
         });
-
-        Validator::extend('unique_slug', function ($attribute, $value, $parameters, $validator) {
-            return true;
-        });
     }
 
     /**
