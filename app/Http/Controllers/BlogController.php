@@ -8,6 +8,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Session;
 
 class BlogController extends Controller {
     public function getView($slug): View {
@@ -80,9 +81,16 @@ class BlogController extends Controller {
         $post->content = $content;
         $post->is_active = $request->input('is_active') ?: 0;
         $post->revision = 1;
-        $post->save();
 
-        return redirect()->route('admin_blog_edit', ['id' => $post->id]);
+        if ($post->save()) {
+            Session::flash('flash_success', 'Post created successfully');
+
+            return redirect()->route('admin_blog_edit', ['id' => $post->id]);
+        }
+
+        Session::flash('flash_error', 'There was a problem saving your post');
+
+        return back()->withInput();
     }
 
     public function getAdminEdit($id): View {
@@ -95,8 +103,33 @@ class BlogController extends Controller {
     }
 
     public function postAdminEdit(BlogRequest $request, $id): RedirectResponse {
+        $post = BlogPage::find($id);
+        $slug = BlogPage::getSlug($request->input('title'));
 
-        return redirect()->route('admin_blog_edit', ['id' => $id]);
+        if ($slug !== $post->slug && !BlogPage::checkSlug($slug)) {
+            return back()->withInput()->withErrors(['slug' => 'Slug is not unique, please resubmit with new title']);
+        }
+
+        $ids = BlogPage::getImageIds($request->input('content.content'));
+
+        $content = $request->input('content');
+        $content['image_ids'] = $ids;
+
+        $post->title = $request->input('title');
+        $post->slug = $slug;
+        $post->content = $content;
+        $post->is_active = $request->input('is_active') ?: 0;
+        $post->revision++;
+
+        if ($post->save()) {
+            Session::flash('flash_success', 'Post edited successfully');
+
+            return redirect()->route('admin_blog_edit', ['id' => $id]);
+        }
+
+        Session::flash('flash_error', 'There was a problem saving your post');
+
+        return back()->withInput();
     }
 
     public function postAdminApiSlugCheck(Request $request): JsonResponse {

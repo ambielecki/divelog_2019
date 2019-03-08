@@ -23,6 +23,7 @@
     <ul id="admin_dropdown" class="dropdown-content text-blue">
         <li><a href="{{ route('admin_home_edit') }}">Home Page</a></li>
         <li><a href="{{ route('admin_image_list') }}">Images</a></li>
+        <li><a href="{{ route('admin_blog_list') }}">Blog</a></li>
     </ul>
 @endadmin
 
@@ -66,6 +67,7 @@
                     <ul>
                         <li><a href="{{ route('admin_home_edit') }}">Home Page</a></li>
                         <li><a href="{{ route('admin_image_list') }}">Images</a></li>
+                        <li><a href="{{ route('admin_blog_list') }}">Blog</a></li>
                     </ul>
                 </div>
             </li>
