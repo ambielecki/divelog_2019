@@ -94,3 +94,7 @@ p + p {
 .fake_label {
     font-size: 0.75rem;
 }
+
+.label_override {
+    font-size: 0.75rem !important;
+}

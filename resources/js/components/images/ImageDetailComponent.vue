@@ -19,7 +19,7 @@
             </template>
         </div>
 
-        <div class="card-action">
+        <div v-if="display_action" class="card-action">
             <a :href="'/admin/images/edit/' + image.id" class="waves-effect waves-light btn">Edit</a>
         </div>
     </div>
@@ -27,6 +27,11 @@
 
 <script>
     export default {
-        props: ['image'],
+        props: {
+            image: {},
+            display_action: {
+                default: true,
+            }
+        },
     }
 </script>

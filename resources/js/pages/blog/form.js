@@ -10,6 +10,7 @@ let app = new Vue({
         pages: null,
         search: null,
         selected_image: {},
+        show_selected: false,
         slug: '',
     },
     mounted: function () {
@@ -17,7 +18,8 @@ let app = new Vue({
     },
     methods: {
         imageThumbClick(clicked_image) {
-
+            this.show_selected = true;
+            this.selected_image = clicked_image;
         },
 
         paginationClick(page) {
@@ -69,6 +71,10 @@ let app = new Vue({
                 console.log(error);
             });
         }, 500),
+
+        imageCopyClick(image_id) {
+            console.log(image_id);
+        },
     },
 });
 
@@ -78,4 +84,6 @@ document.addEventListener('DOMContentLoaded', function() {
         .catch(error => {
             console.error(error);
         });
+
+    new ClipBoard('.copy_btn');
 });

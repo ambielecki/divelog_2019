@@ -9,6 +9,8 @@ use App\Scopes\BlogPageScope;
 class BlogPage extends Page {
     const PAGE_TYPE = 'blog';
 
+    const IMAGE_REGEX = '/\|\|--(.*?)--\|\|/';
+
     protected static function boot(): void {
         parent::boot();
 

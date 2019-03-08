@@ -24,6 +24,12 @@ class BlogController extends Controller {
     }
 
     public function postAdminCreate(Request $request): RedirectResponse {
+        $regex = BlogPage::IMAGE_REGEX;
+        preg_match_all($regex, $request->input('content.content'), $matches);
+
+        if ($matches) {
+            $ids = array_map('trim', $matches[1]);
+        }
 
         return redirect()->route('admin_blog_create');
     }
@@ -39,8 +45,6 @@ class BlogController extends Controller {
     }
 
     public function postAdminApiSlugCheck(Request $request): JsonResponse {
-        $title = $request->input('title');
-
         $slug = BlogPage::getSlug($request->input('title'));
         $error = !BlogPage::checkSlug($slug);
 
