@@ -5,21 +5,11 @@
 @endsection
 
 @section('content')
-    <div class="row">
-        <div class="col s12 m6 offset-m3">
-            <div class="card">
-                <div class="card-content">
-                    <span class="card-title">Edit Blog Post</span>
-                    <div class="row">
-                        @include('admin.blog.form', [
-                            'route'       => route('admin_blog_edit', ['id' => $page->id]),
-                            'button_text' => 'Edit Image',
-                        ])
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    @include('admin.blog.form', [
+        'title'       => 'Edit Post',
+        'route'       => route('admin_blog_edit', ['id' => $page->id]),
+        'button_text' => 'Edit Image',
+    ])
 @endsection
 
 @push('page_scripts')

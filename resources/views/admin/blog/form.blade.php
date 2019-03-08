@@ -1,5 +1,5 @@
 <div class="row" id="blog_app">
-    <div class="col s12 m5 offset-m2">
+    <div class="col s12 m4 offset-m2">
         <div class="card">
             <div class="card-content">
                 <span class="card-title">{{ $title }}</span>
@@ -24,7 +24,12 @@
                         </div>
                         <div class="row">
                             <div class="input-field col s12">
-                                <input id="slug" name="slug" type="text" value="{{ old('slug', $page->slug) }}" @keyup="checkSlug" v-model="slug" disabled="disabled">
+                                <input id="slug" name="slug" type="text" data-initial_value="{{ old('slug', $page->slug) }}" @keyup="checkSlug" v-model="slug" disabled="disabled">
+                                @if ($errors->has('slug'))
+                                    <span class="red-text">
+                                        <strong>{{ $errors->first('slug') }}</strong>
+                                    </span>
+                                @endif
                                 <form-error v-if="errors.title" :error="errors.title"></form-error>
                             </div>
                         </div>
@@ -48,6 +53,15 @@
 
                         <div class="row">
                             <div class="col s12">
+                                <label>
+                                    <input type="checkbox" name="is_active" value="1" {{ $page->is_active ? 'checked' : '' }}>
+                                    <span>Set Active</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col s12">
                                 <button class="btn waves-effect waves-light" type="submit" name="action">{{ $button_text }}
                                     <i class="material-icons right">send</i>
                                 </button>
@@ -59,7 +73,7 @@
         </div>
     </div> {{-- End Form Column--}}
 
-    <div class="col s12 m5">
+    <div class="col s12 m4">
         <div class="row">
             <div class="col s12">
                 <div class="card">

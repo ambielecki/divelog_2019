@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Validator;
 
 class AppServiceProvider extends ServiceProvider {
     /**
@@ -19,6 +20,10 @@ class AppServiceProvider extends ServiceProvider {
         Blade::directive('endadmin', function () {
             return '<?php endif; ?>';
         });
+
+//        Validator::extend('unique_slug', function ($attribute, $value, $parameters, $validator) {
+//            $model = ;
+//        });
     }
 
     /**

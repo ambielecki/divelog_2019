@@ -15,6 +15,11 @@ let app = new Vue({
     },
     mounted: function () {
         this.getImageList();
+
+        this.slug = document
+            .querySelector('#slug')
+            .dataset
+            .initial_value;
     },
     methods: {
         imageThumbClick(clicked_image) {

@@ -53,7 +53,20 @@ class BlogPage extends Page {
         return $slug;
     }
 
-    public static function checkSlug(string $title): bool {
-        return self::where('title', $title)->count() === 0;
+    public static function checkSlug(string $slug): bool {
+        return self::where('slug', $slug)->count() === 0;
+    }
+
+    public static function getImageIds($content): array {
+        $regex = self::IMAGE_REGEX;
+        preg_match_all($regex, $content, $matches);
+
+        if ($matches) {
+            $ids = array_map('trim', $matches[1]);
+        } else {
+            $ids = [];
+        }
+
+        return $ids;
     }
 }

@@ -18,7 +18,33 @@ class BlogController extends Controller {
     }
 
     public function getApiList(Request $request): JsonResponse {
-        return response()->json();
+        $search = $request->get('search');
+        $page = $request->get('page') ?: 1;
+        $limit = $request->get('limit') ?: 20;
+        $skip = ($page - 1) * $limit;
+
+        $query = BlogPage::query()
+            ->where('is_active', 1)
+            ->orderBy('id', 'DESC');
+
+        if ($search) {
+            $search = '%' . $search . '%';
+            $query = $query->where('title', 'LIKE', $search);
+        }
+
+        $count = $query->count();
+
+        $posts = $query
+            ->limit($limit)
+            ->skip($skip)
+            ->get();
+
+        return response()->json([
+            'posts' => $posts,
+            'page'  => $page,
+            'pages' => ceil($count / $limit),
+            'count' => $count,
+        ]);
     }
 
     public function getAdminList(): View {
@@ -36,21 +62,35 @@ class BlogController extends Controller {
     }
 
     public function postAdminCreate(Request $request): RedirectResponse {
-        $regex = BlogPage::IMAGE_REGEX;
-        preg_match_all($regex, $request->input('content.content'), $matches);
+        $slug = BlogPage::getSlug($request->input('title'));
 
-        if ($matches) {
-            $ids = array_map('trim', $matches[1]);
-        } else {
-            $ids = [];
+        if (!BlogPage::checkSlug($slug)) {
+            return back()->withInput()->withErrors(['slug' => 'Slug is not unique, please resubmit with new title']);
         }
 
-        return redirect()->route('admin_blog_create');
+        $ids = BlogPage::getImageIds($request->input('content.content'));
+
+        $content = $request->input('content');
+        $content['image_ids'] = $ids;
+
+        $post = new BlogPage();
+        $post->title = $request->input('title');
+        $post->slug = $slug;
+        $post->content = $content;
+        $post->is_active = $request->input('is_active') ?: 0;
+        $post->revision = 1;
+        $post->save();
+
+        return redirect()->route('admin_blog_edit', ['id' => $post->id]);
     }
 
     public function getAdminEdit($id): View {
+        $post = BlogPage::find($id);
 
-        return view('admin.blog.edit');
+        return view('admin.blog.edit', [
+            'content' => $post->content,
+            'page'    => $post,
+        ]);
     }
 
     public function postAdminEdit(Request $request, $id): RedirectResponse {
