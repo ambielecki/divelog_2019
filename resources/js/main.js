@@ -130,6 +130,7 @@ window.DiveLogRepeat = {
         Vue.component('image-detail', require('./components/images/ImageDetailComponent').default);
         Vue.component('page-list', require('./components/PageListComponent').default);
         Vue.component('form-error', require('./components/FormErrorComponent').default);
+        Vue.component('post-versions', require('./components/pages/RevisionListComponent').default);
     },
 
     initVueFilters: () => {

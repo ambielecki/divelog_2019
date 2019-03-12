@@ -58,5 +58,9 @@ Route::group(['prefix' => '/api'], function () {
         Route::group(['prefix' => '/blog'], function () {
             Route::post('/slug-check', 'BlogController@postAdminApiSlugCheck')->name('api_admin_blog_slug_check');
         });
+
+        Route::group(['prefix' => '/home'], function () {
+            Route::get('/list', 'HomeController@getApiList')->name('api_admin_home_list');
+        });
     });
 });

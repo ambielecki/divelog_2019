@@ -13,6 +13,7 @@ let app = new Vue({
         limit: 20,
         page: 1,
         pages: null,
+        previous_versions: [],
         search: null,
         selected_image: {},
     },
@@ -51,6 +52,7 @@ let app = new Vue({
             .initial_value;
 
         this.getImageList();
+        this.getPreviousVersions();
     },
     methods: {
         imageThumbClick(clicked_image) {
@@ -121,5 +123,15 @@ let app = new Vue({
         searchImages: DiveLogRepeat.debounce(function () {
             this.getImageList();
         }, 500),
+
+        getPreviousVersions() {
+            Axios.get('/api/admin/home/list', {
+                params: {}
+            }).then(function (response) {
+                app.previous_versions = response.data.posts;
+            }).catch(function (error) {
+                console.log(error);
+            });
+        },
     },
 });

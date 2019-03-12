@@ -154,84 +154,98 @@
             </div>{{-- End Form Column --}}
 
             <div class="col s12 m5">
-                <div class="card">
-                    <div class="card-content">
-                        <span class="card-title">Select Images</span>
-                        <div class="row">
-                            <div class="input-field col s6">
-                                <i class="material-icons prefix">search</i>
-                                <input @keyup="searchImages" v-model="search" placeholder="Search">
-                            </div>
+                <div class="row">
+                    <div class="col s12">
+                        <div class="card">
+                            <div class="card-content">
+                                <span class="card-title">Select Images</span>
+                                <div class="row">
+                                    <div class="input-field col s6">
+                                        <i class="material-icons prefix">search</i>
+                                        <input @keyup="searchImages" v-model="search" placeholder="Search">
+                                    </div>
 
-                            <div class="input-field col s6">
-                                <select @change="getImageList()" v-model="limit" class="material_select">
-                                    <option value="20" selected>20</option>
-                                    <option value="60">60</option>
-                                    <option value="100">100</option>
-                                </select>
-                                <label>Limit</label>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col s6 m3">
-                                <label>
-                                    <input
-                                        name="image_destination"
-                                        type="radio"
-                                        value="for_hero"
-                                        v-model="image_destination"
-                                        @change="getImageList"
-                                    >
-                                    <span>For Hero</span>
-                                </label>
-                            </div>
-                            <div class="col s6 m3">
-                                <label>
-                                    <input
-                                        name="image_destination"
-                                        type="radio"
-                                        value="for_carousel"
-                                        v-model="image_destination"
-                                        @change="getImageList"
-                                    >
-                                    <span>For Carousel</span>
-                                </label>
-                            </div>
-                        </div>
-
-                        <div v-if="!images_loading && images.length !== 0" class="row">
-                            <image-thumbnail
-                                v-for="image in images"
-                                :class="'col s3'"
-                                :image="image"
-                                @image_clicked="imageThumbClick"
-                            ></image-thumbnail>
-                        </div>
-                        <div v-else-if="images_loading" class="center-align">
-                            <div class="preloader-wrapper big active">
-                                <div class="spinner-layer spinner-blue-only">
-                                    <div class="circle-clipper left">
-                                        <div class="circle"></div>
-                                    </div><div class="gap-patch">
-                                        <div class="circle"></div>
-                                    </div><div class="circle-clipper right">
-                                        <div class="circle"></div>
+                                    <div class="input-field col s6">
+                                        <select @change="getImageList()" v-model="limit" class="material_select">
+                                            <option value="20" selected>20</option>
+                                            <option value="60">60</option>
+                                            <option value="100">100</option>
+                                        </select>
+                                        <label>Limit</label>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div v-else>
-                            <b>There were no images matching your search criteria.</b>
-                        </div>
-                    </div>
 
-                    <div class="row" v-if="pages && (pages !== 1)">
-                        <div class="col s12">
-                            <page-list :page="page" :pages="pages" :links="false" @page_clicked="paginationClick"></page-list>
-                        </div>
+                                <div class="row">
+                                    <div class="col s6 m3">
+                                        <label>
+                                            <input
+                                                name="image_destination"
+                                                type="radio"
+                                                value="for_hero"
+                                                v-model="image_destination"
+                                                @change="getImageList"
+                                            >
+                                            <span>For Hero</span>
+                                        </label>
+                                    </div>
+                                    <div class="col s6 m3">
+                                        <label>
+                                            <input
+                                                name="image_destination"
+                                                type="radio"
+                                                value="for_carousel"
+                                                v-model="image_destination"
+                                                @change="getImageList"
+                                            >
+                                            <span>For Carousel</span>
+                                        </label>
+                                    </div>
+                                </div>
+
+                                <div v-if="!images_loading && images.length !== 0" class="row">
+                                    <image-thumbnail
+                                        v-for="image in images"
+                                        :class="'col s3'"
+                                        :image="image"
+                                        @image_clicked="imageThumbClick"
+                                    ></image-thumbnail>
+                                </div>
+                                <div v-else-if="images_loading" class="center-align">
+                                    <div class="preloader-wrapper big active">
+                                        <div class="spinner-layer spinner-blue-only">
+                                            <div class="circle-clipper left">
+                                                <div class="circle"></div>
+                                            </div><div class="gap-patch">
+                                                <div class="circle"></div>
+                                            </div><div class="circle-clipper right">
+                                                <div class="circle"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div v-else>
+                                    <b>There were no images matching your search criteria.</b>
+                                </div>
+                            </div>
+
+                            <div class="row" v-if="pages && (pages !== 1)">
+                                <div class="col s12">
+                                    <page-list :page="page" :pages="pages" :links="false" @page_clicked="paginationClick"></page-list>
+                                </div>
+                            </div>
+                        </div>{{-- End Image Picker Card --}}
                     </div>
-                </div>{{-- End Image Picker Card --}}
+                </div>
+
+                <div v-if="previous_versions.length > 0" class="row">
+                    <div class="col s12">
+                        <post-versions
+                            :posts="previous_versions"
+                            :edit_url="'/admin/home/'">
+                        </post-versions>
+                    </div>
+                </div>
+
             </div>{{-- End Image Picker Column --}}
         </div>{{-- End Row --}}
     </div> {{-- End Vue App --}}

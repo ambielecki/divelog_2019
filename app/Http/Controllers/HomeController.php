@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Pages\HomePage;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 use Session;
@@ -73,5 +74,18 @@ class HomeController extends Controller {
         }
 
         return redirect()->route('admin_home_edit');
+    }
+
+    public function getApiList(Request $request): JsonResponse {
+        $limit = $request->input('limit') ?: 10;
+
+        $posts = HomePage::query()
+            ->where('is_active', 0)
+            ->orderBy('revision', 'DESC')
+            ->limit($limit)
+            ->get()
+            ->toArray();
+
+        return response()->json(['posts' => $posts]);
     }
 }
