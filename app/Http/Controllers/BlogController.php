@@ -70,17 +70,8 @@ class BlogController extends Controller {
             return back()->withInput()->withErrors(['slug' => 'Slug is not unique, please resubmit with new title']);
         }
 
-        $ids = BlogPage::getImageIds($request->input('content.content'));
-
-        $content = $request->input('content');
-        $content['image_ids'] = $ids;
-
         $post = new BlogPage();
-        $post->title = $request->input('title');
-        $post->slug = $slug;
-        $post->content = $content;
-        $post->is_active = $request->input('is_active') ?: 0;
-        $post->revision = 1;
+        $post = BlogPage::processPost($post, $request, $slug);
 
         if ($post->save()) {
             Session::flash('flash_success', 'Post created successfully');
@@ -103,28 +94,25 @@ class BlogController extends Controller {
     }
 
     public function postAdminEdit(BlogRequest $request, $id): RedirectResponse {
-        $post = BlogPage::find($id);
+        $original_post = BlogPage::find($id);
         $slug = BlogPage::getSlug($request->input('title'));
 
-        if ($slug !== $post->slug && !BlogPage::checkSlug($slug)) {
+        if ($slug !== $original_post->slug && !BlogPage::checkSlug($slug)) {
             return back()->withInput()->withErrors(['slug' => 'Slug is not unique, please resubmit with new title']);
         }
 
-        $ids = BlogPage::getImageIds($request->input('content.content'));
-
-        $content = $request->input('content');
-        $content['image_ids'] = $ids;
-
-        $post->title = $request->input('title');
-        $post->slug = $slug;
-        $post->content = $content;
-        $post->is_active = $request->input('is_active') ?: 0;
-        $post->revision++;
+        $post = new BlogPage();
+        $post = BlogPage::processPost($post, $request, $slug, $original_post->revision);
 
         if ($post->save()) {
+            BlogPage::query()
+                ->where('slug', $original_post->slug)
+                ->where('id', '<>', $post->id)
+                ->update(['is_active' => 0]);
+
             Session::flash('flash_success', 'Post edited successfully');
 
-            return redirect()->route('admin_blog_edit', ['id' => $id]);
+            return redirect()->route('admin_blog_edit', ['id' => $post->id]);
         }
 
         Session::flash('flash_error', 'There was a problem saving your post');

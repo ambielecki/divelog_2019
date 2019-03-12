@@ -11,6 +11,9 @@
                 <div class="card">
                     <div class="card-content">
                         <span class="card-title">Edit Home Page - Revision {{ $current_page->revision }}</span>
+                        @if (!$is_current)
+                            <p class="red-text">You Are Editing a Previous Version</p>
+                        @endif
 
                         <form action="{{ route('admin_home_edit') }}" method="POST">
                             {{ csrf_field() }}
@@ -126,6 +129,15 @@
                                         @endfor
                                     </select>
                                     <label for="content_blog_posts">Number of Blog Posts</label>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col s12 m6">
+                                    <label>
+                                        <input name="save_as_active" type="checkbox" value="1" {{ old('save_as_active', $is_current) ? 'checked' : '' }}>
+                                        <span>Save as Active Version</span>
+                                    </label>
                                 </div>
                             </div>
 

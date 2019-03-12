@@ -2,6 +2,7 @@
 
 namespace App\Models\Pages;
 
+use App\Http\Requests\BlogRequest;
 use App\Models\Image;
 use App\Models\Page;
 use App\Scopes\BlogPageScope;
@@ -68,5 +69,20 @@ class BlogPage extends Page {
         }
 
         return $ids;
+    }
+
+    public static function processPost(BlogPage $post, BlogRequest $request, string $slug, int $revision = null): BlogPage {
+        $ids = BlogPage::getImageIds($request->input('content.content'));
+
+        $content = $request->input('content');
+        $content['image_ids'] = $ids;
+
+        $post->title = $request->input('title');
+        $post->slug = $slug;
+        $post->content = $content;
+        $post->is_active = $request->input('is_active') ?: 0;
+        $post->revision = $revision ? $revision + 1 : 1;
+
+        return $post;
     }
 }

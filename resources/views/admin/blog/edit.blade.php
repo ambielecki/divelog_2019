@@ -8,7 +8,7 @@
     @include('admin.blog.form', [
         'title'       => 'Edit Post',
         'route'       => route('admin_blog_edit', ['id' => $page->id]),
-        'button_text' => 'Edit Image',
+        'button_text' => 'Edit Post',
     ])
 @endsection
 

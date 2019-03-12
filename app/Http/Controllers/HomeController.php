@@ -18,16 +18,9 @@ class HomeController extends Controller {
         $content = $page->content ?? [];
         unset($page['content']);
 
-//        $hero_image_content = $content['hero_image'] ?? [];
-//        $hero_image = false;
-//        if ($hero_image_content) {
-//            $hero_image = Image::find($hero_image_content['id']);
-//        }
-
         return view('main.home.home', [
             'page'    => $page,
             'content' => $content,
-//            'hero_image' => $hero_image,
         ]);
     }
 
@@ -35,6 +28,8 @@ class HomeController extends Controller {
     public function getEdit($id = null): View {
         if ($id) {
             $current_page = HomePage::find($id);
+
+            $is_current = $current_page->revision === HomePage::where('is_active', 1)->max('revision');
         } else {
             $current_page = HomePage::query()
                 ->where([
@@ -42,11 +37,14 @@ class HomeController extends Controller {
                 ])
                 ->orderBy('revision', 'DESC')
                 ->first();
+
+            $is_current = true;
         }
 
         return view('admin.home.home', [
             'current_page' => $current_page,
             'content'      => $current_page->content,
+            'is_current'   => $is_current,
         ]);
     }
 
@@ -57,12 +55,18 @@ class HomeController extends Controller {
 
         $page = new HomePage();
         $page->revision = $last_page->revision + 1;
-        $page->is_active = 1;
+        $page->is_active = $request->input('save_as_active') ? 1 : 0;
         $page->content = $request->input('content');
         $page->title = $request->input('title');
 
         if ($page->save()) {
-            $id = $page->id;
+            if ($request->input('save_as_active')) {
+                HomePage::query()
+                    ->where('slug', $last_page->slug)
+                    ->where('id', '<>', $page->id)
+                    ->update(['is_active' => 0]);
+            }
+
             Session::flash('flash_success', 'Home Page Saved');
         } else {
             Session::flash('flash_error', 'Error Saving Home Page');
