@@ -79,7 +79,7 @@ class HomeController extends Controller {
 
     public function getApiList(Request $request): JsonResponse {
         $page = $request->get('page') ?: 1;
-        $limit = $request->input('limit') ?: 1;
+        $limit = $request->input('limit') ?: 10;
         $skip = ($page - 1) * $limit;
 
         $query = HomePage::query()

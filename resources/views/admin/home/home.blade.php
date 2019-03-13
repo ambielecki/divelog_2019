@@ -241,18 +241,18 @@
                     <div class="col s12">
                         <div class="row">
                             <div class="col s12">
-                                <post-versions
-                                    :posts="previous_versions"
-                                    :edit_url="'/admin/home/'">
-                                </post-versions>
-                            </div>
-                        </div>
+                                <div class="card">
+                                    <div class="card-content">
+                                        <post-versions
+                                            :posts="previous_versions"
+                                            :edit_url="'/admin/home/'">
+                                        </post-versions>
 
-                        <div class="row">
-                            <div class="col s12">
-                                <div class="row" v-if="post_pages && (post_pages !== 1)">
-                                    <div class="col s12">
-                                        <page-list :page="post_page" :pages="post_pages" :links="false" @page_clicked="postPaginationClick"></page-list>
+                                        <div class="row" v-if="post_pages && (post_pages !== 1)">
+                                            <div class="col s12">
+                                                <page-list :page="post_page" :pages="post_pages" :links="false" @page_clicked="postPaginationClick"></page-list>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

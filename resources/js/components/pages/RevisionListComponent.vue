@@ -1,24 +1,22 @@
 <template>
-    <div class="card blue darken-2 white-text">
-        <div class="card-content">
-            <span class="card-title">Previous Versions</span>
-            <div v-for="(post, index) in posts">
-                <div class="row">
-                    <div class="col s12">
-                        <b>Revision: </b>{{ post.revision }}<br>
-                        <b>Created: </b>{{ post.created_at }}<br>
-                        <b>Content: </b><br>
-                    </div>
+    <div>
+        <span class="card-title">Previous Versions</span>
+        <div v-for="(post, index) in posts">
+            <div class="row">
+                <div class="col s12">
+                    <b>Revision: </b>{{ post.revision }}<br>
+                    <b>Created: </b>{{ post.created_at }}<br>
+                    <b>Content: </b><br>
                 </div>
-
-                <div class="row">
-                    <div class="col s12">
-                        <a class="white blue-text text-darken-2 btn" :href="edit_url + post.id">View version {{ post.revision }}</a>
-                    </div>
-                </div>
-
-                <hr v-if="index < posts.length - 1">
             </div>
+
+            <div class="row">
+                <div class="col s12">
+                    <a class="btn" :href="edit_url + post.id">View version {{ post.revision }}</a>
+                </div>
+            </div>
+
+            <hr v-if="index < posts.length - 1">
         </div>
     </div>
 </template>
