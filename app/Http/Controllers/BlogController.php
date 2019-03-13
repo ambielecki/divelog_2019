@@ -20,6 +20,10 @@ class BlogController extends Controller {
             ->orderBy('id', 'DESC')
             ->first();
 
+        if (!$post) {
+            abort(404, 'Post Not Found');
+        }
+
         $post = BlogPage::processContent($post);
 
         return view('main.blog.view', [
@@ -28,7 +32,7 @@ class BlogController extends Controller {
         ]);
     }
 
-    public function getList($slug): View {
+    public function getList(): View {
         return view('main.blog.list');
     }
 

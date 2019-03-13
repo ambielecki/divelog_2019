@@ -13,10 +13,8 @@ class BlogPage extends Page {
     const IMAGE_REGEX = '/\|\|--(.*?)--\|\|/';
     const IMAGE_INSERT_REGEX = '/\<p\>\|\|-- (.*?) --\|\|\<\/p\>/';
     const IMAGAE_TEMPLATE = <<<IMAGE
-<div class="row">
-    <div class="col s6 offset-s3">
-        <img class="responsive-img" src="%s" title="%s" alt="%s">
-    </div>
+<div class="col m6 s12 left">
+    <img class="responsive-img" src="%s" title="%s" alt="%s">
 </div>
 IMAGE;
 
