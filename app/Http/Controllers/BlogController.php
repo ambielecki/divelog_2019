@@ -12,7 +12,20 @@ use Session;
 
 class BlogController extends Controller {
     public function getView($slug): View {
-        return view('main.blog.view');
+        $post = BlogPage::query()
+            ->where([
+                ['slug', $slug],
+                ['is_active', 1]
+            ])
+            ->orderBy('id', 'DESC')
+            ->first();
+
+        $post = BlogPage::processContent($post);
+
+        return view('main.blog.view', [
+            'post'    => $post,
+            'content' => $post->content,
+        ]);
     }
 
     public function getList($slug): View {
@@ -102,7 +115,7 @@ class BlogController extends Controller {
         }
 
         $post = new BlogPage();
-        $post = BlogPage::processPost($post, $request, $slug, $original_post->revision);
+        $post = BlogPage::processPost($post, $request, $slug, $original_post);
 
         if ($post->save()) {
             BlogPage::query()

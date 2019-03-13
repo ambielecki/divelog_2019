@@ -8,7 +8,7 @@ Route::get('/', 'HomeController@getHome')->name('home');
 
 Route::group(['prefix' => '/blog'], function () {
     Route::get('/list', 'BlogController@getList')->name('blog_list');
-    Route::get('/view/{slug}', 'BlogController@getView')->name('blog_view');
+    Route::get('/{slug}', 'BlogController@getView')->name('blog_view');
 });
 
 Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {

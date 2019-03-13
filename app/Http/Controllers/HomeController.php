@@ -59,6 +59,7 @@ class HomeController extends Controller {
         $page->is_active = $request->input('save_as_active') ? 1 : 0;
         $page->content = $request->input('content');
         $page->title = $request->input('title');
+        $page->parent_id = $last_page->parent_id ?? $last_page->id;
 
         if ($page->save()) {
             if ($request->input('save_as_active')) {

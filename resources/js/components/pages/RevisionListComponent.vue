@@ -13,7 +13,7 @@
 
                 <div class="row">
                     <div class="col s12">
-                        <a class="white blue-text text-darken-2 btn" :href="edit_url + post.id">View version {{ post.id }}</a>
+                        <a class="white blue-text text-darken-2 btn" :href="edit_url + post.id">View version {{ post.revision }}</a>
                     </div>
                 </div>
 

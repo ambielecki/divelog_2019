@@ -58,6 +58,10 @@ p + p {
     margin-top: 1em !important;
 }
 
+p + div {
+    margin-top: 20px !important;
+}
+
 .dive_table td, .dive_table th {
     padding: 0.15em 0.3em 0.15em 0.3em;
 }
