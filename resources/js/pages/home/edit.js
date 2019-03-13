@@ -13,6 +13,8 @@ let app = new Vue({
         limit: 20,
         page: 1,
         pages: null,
+        post_page: 1,
+        post_pages: null,
         previous_versions: [],
         search: null,
         selected_image: {},
@@ -126,12 +128,22 @@ let app = new Vue({
 
         getPreviousVersions() {
             Axios.get('/api/admin/home/list', {
-                params: {}
+                params: {
+                    page: this.post_page,
+                }
             }).then(function (response) {
+                console.log(response.data);
                 app.previous_versions = response.data.posts;
+                app.post_page = response.data.page;
+                app.post_pages = response.data.pages;
             }).catch(function (error) {
                 console.log(error);
             });
+        },
+
+        postPaginationClick(page) {
+            this.post_page = page;
+            this.getPreviousVersions();
         },
     },
 });

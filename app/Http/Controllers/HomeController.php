@@ -78,15 +78,27 @@ class HomeController extends Controller {
     }
 
     public function getApiList(Request $request): JsonResponse {
-        $limit = $request->input('limit') ?: 10;
+        $page = $request->get('page') ?: 1;
+        $limit = $request->input('limit') ?: 1;
+        $skip = ($page - 1) * $limit;
 
-        $posts = HomePage::query()
+        $query = HomePage::query()
             ->where('is_active', 0)
-            ->orderBy('revision', 'DESC')
+            ->orderBy('revision', 'DESC');
+
+        $count = $query->count();
+
+        $posts = $query
             ->limit($limit)
+            ->skip($skip)
             ->get()
             ->toArray();
 
-        return response()->json(['posts' => $posts]);
+        return response()->json([
+            'posts' => $posts,
+            'page'   => (int) $page,
+            'pages'  => ceil($count / $limit),
+            'count'  => $count,
+        ]);
     }
 }

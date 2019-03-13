@@ -134,7 +134,7 @@ class ImageController extends Controller {
 
         return response()->json([
             'images' => $images,
-            'page'   => $page,
+            'page'   => (int) $page,
             'pages'  => ceil($count / $limit),
             'count'  => $count,
         ]);

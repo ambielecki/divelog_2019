@@ -5,7 +5,7 @@
             <li
                 v-for="i in 9"
                 v-bind:class="{ active: (page + i - 5 === page), 'waves-effect': (page + i - 5 !== page) }"
-                v-if="(page + i - 5) > 0"
+                v-if="(page + i - 5) > 0 && (page + i - 5) <= pages"
             >
                 <a @click="getPage($event)" :data-page="(page + i - 5)">{{ page + i - 5 }}</a>
             </li>
