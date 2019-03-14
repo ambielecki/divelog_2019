@@ -8,11 +8,12 @@ use App\Models\Page;
 use App\Scopes\BlogPageScope;
 
 class BlogPage extends Page {
-    const PAGE_TYPE = 'blog';
+    public const PAGE_TYPE = 'blog';
 
-    const IMAGE_REGEX = '/\|\|--(.*?)--\|\|/';
-    const IMAGE_INSERT_REGEX = '/\<p\>\|\|-- (.*?) --\|\|\<\/p\>/';
-    const IMAGAE_TEMPLATE = <<<IMAGE
+    private const PARAGRAPH_REGEX = '/\<p\>.*?\<\/p\>/';
+    private const IMAGE_REGEX = '/\|\|--(.*?)--\|\|/';
+    private const IMAGE_INSERT_REGEX = '/\<p\>\|\|-- (.*?) --\|\|\<\/p\>/';
+    private const IMAGE_TEMPLATE = <<<IMAGE
 <div class="col m6 s12 left">
     <img class="responsive-img" src="%s" title="%s" alt="%s">
 </div>
@@ -30,26 +31,7 @@ IMAGE;
     }
 
     public function getContentAttribute($value): array {
-        $content = json_decode($value, true);
-
-//        if (isset($content['hero_image'])) {
-//            $hero_image = Image::find($content['hero_image']['id']);
-//            $hero_image = $hero_image ? $hero_image->toArray() : [];
-//
-//            $content['hero_image'] = array_merge($hero_image, $content['hero_image']);
-//        }
-//
-//        if (isset($content['carousel_images']['ids'])) {
-//            $ids = explode(',', $content['carousel_images']['ids']);
-//            $carousel_images = Image::query()
-//                ->whereIn('id', $ids)
-//                ->get()
-//                ->toArray();
-//
-//            $content['carousel_images']['images'] = $carousel_images;
-//        }
-
-        return $content;
+        return json_decode($value, true);
     }
 
     public static function getSlug(string $title): string {
@@ -96,10 +78,11 @@ IMAGE;
         return $post;
     }
 
-    public static function processContent(BlogPage $post): BlogPage {
+    public static function processContent(BlogPage $post, bool $replace_as_image = true): BlogPage {
         $post_content = $post->content;
         $content = $post_content['content'] ?: '';
 
+        // fix images
         preg_match_all(self::IMAGE_INSERT_REGEX, $content, $matches);
 
         if ($matches) {
@@ -110,19 +93,28 @@ IMAGE;
             }
 
             foreach ($matches[0] as $key => $match) {
-                $image_id = $matches[1][$key];
-                $replacement_image = $images[$image_id];
-                $src = $replacement_image->has_sizes
-                    ? '/' . $replacement_image->folder . 'medium/' . $replacement_image->file_name
-                    : '/' . $replacement_image->folder . $replacement_image->file_name;
+                $replacement = '';
 
-                $replacement = sprintf(self::IMAGAE_TEMPLATE, $src, $replacement_image->title, $replacement_image->description);
+                if ($replace_as_image) {
+                    $image_id = $matches[1][$key];
+                    $replacement_image = $images[$image_id];
+                    $src = $replacement_image->has_sizes
+                        ? '/' . $replacement_image->folder . 'medium/' . $replacement_image->file_name
+                        : '/' . $replacement_image->folder . $replacement_image->file_name;
+
+                    $replacement = sprintf(self::IMAGE_TEMPLATE, $src, $replacement_image->title, $replacement_image->description);
+                }
+
 
                 $content = str_replace($match, $replacement, $content);
             }
         }
 
         $post_content['content'] = $content;
+
+        // get first <p>
+        preg_match(self::PARAGRAPH_REGEX, $content, $paragraph);
+        $post_content['first_paragraph'] = $paragraph[0] ?? '';
 
         $post->content = $post_content;
 

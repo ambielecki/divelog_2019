@@ -131,6 +131,7 @@ window.DiveLogRepeat = {
         Vue.component('page-list', require('./components/PageListComponent').default);
         Vue.component('form-error', require('./components/FormErrorComponent').default);
         Vue.component('post-versions', require('./components/pages/RevisionListComponent').default);
+        Vue.component('blog-item', require('./components/pages/BlogListItemComponent').default);
     },
 
     initVueFilters: () => {

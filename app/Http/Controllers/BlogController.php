@@ -58,6 +58,10 @@ class BlogController extends Controller {
             ->skip($skip)
             ->get();
 
+        $posts = $posts->map(function ($post) {
+            return BlogPage::processContent($post);
+        });
+
         return response()->json([
             'posts' => $posts,
             'page'  => $page,
@@ -67,7 +71,6 @@ class BlogController extends Controller {
     }
 
     public function getAdminList(): View {
-
         return view('admin.blog.list');
     }
 
