@@ -5,8 +5,7 @@
 @stop
 
 @section('content')
-    <div class="row" id="log_app">
-        <p>Fallback check</p>
+    <div id="log_app">
         <router-view></router-view>
     </div>
 @stop
