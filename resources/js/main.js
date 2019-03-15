@@ -104,6 +104,15 @@ window.DiveLogRepeat = {
         Materialize.FormSelect.init(selects, options);
     },
 
+    initMaterialBox: (elems = null, options = {}) => {
+        if (!elems) {
+            elems = document.querySelectorAll('.materialboxed');
+            console.log(elems);
+        }
+        Materialize.Materialbox.init(elems, options);
+
+    },
+
     initFlashMessage: () => {
         document.querySelectorAll('.flash_close').forEach(function (element) {
             element.addEventListener('click', function (event) {
@@ -154,6 +163,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fullWidth: true,
         indicators: true
     });
+    DiveLogRepeat.initMaterialBox();
     DiveLogRepeat.initSelects();
     DiveLogRepeat.initTableCrosshair();
     DiveLogRepeat.initFlashMessage();

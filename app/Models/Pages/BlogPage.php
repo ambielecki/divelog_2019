@@ -14,8 +14,8 @@ class BlogPage extends Page {
     private const IMAGE_REGEX = '/\|\|--(.*?)--\|\|/';
     private const IMAGE_INSERT_REGEX = '/\<p\>\|\|-- (.*?) --\|\|\<\/p\>/';
     private const IMAGE_TEMPLATE = <<<IMAGE
-<div class="col m6 s12 left">
-    <img class="responsive-img" src="%s" title="%s" alt="%s">
+<div class="col m4 s12 left" style="clear: both">
+    <img class="materialboxed responsive-img" src="%s" title="%s" alt="%s">
 </div>
 IMAGE;
 
