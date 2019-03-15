@@ -17,7 +17,9 @@ class DiveLogController extends Controller
     }
 
     public function getApiCreate(): JsonResponse {
-        return response()->json();
+        return response()->json([
+            'dive_number' => 1,
+        ]);
     }
 
     public function postApiCreate($id): JsonResponse {
@@ -30,5 +32,11 @@ class DiveLogController extends Controller
 
     public function postApiEdit($id): JsonResponse {
         return response()->json();
+    }
+
+    public function postApiUser(): JsonResponse {
+        return response()->json([
+            'user' => auth()->user(),
+        ]);
     }
 }

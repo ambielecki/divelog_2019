@@ -55,7 +55,7 @@ Route::group(['prefix' => '/api'], function () {
         Route::get('/list', 'BlogController@getApiList');
     });
 
-    Route::group(['prefix' => '/blog'], function () {
+    Route::group(['prefix' => '/dive-log'], function () {
         Route::get('/list', 'DiveLogController@getApiList');
         Route::get('/create', 'DiveLogController@getApiCreate');
         Route::get('/edit/{dive_number}', 'DiveLogController@getApiEdit');

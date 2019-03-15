@@ -45,13 +45,9 @@
 
 <script>
     export default {
-        props: {
-            user: {
-                default: null,
-            },
-        },
         data() {
             return {
+                user: {},
                 show_post: false,
                 dive_log: {
                     dive_number: '',
@@ -70,12 +66,23 @@
             }
         },
         methods: {
-            getCreate: function () {
-                Axios.post('/api/dive-log/create', {
+            getCreate() {
+                Axios.get('/api/dive-log/create', {
+                    params: {
+                        user: user.id ? user.id : null,
+                    },
+                }).then(function (response) {
+                    this.dive_number = response.data.dive_number;
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
+            checkUser() {
+                Axios.post('/api/dive-log/user', {
 
                 }).then(function (response) {
-                    app.user = response.data.user;
-                    app.dive_number = response.data.dive_number
+                    this.user = response.data.user;
+                    this.getCreate();
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -85,7 +92,7 @@
 
         },
         mounted() {
-            this.getCreate();
+            this.checkUser();
             Materialize.Datepicker.init(document.querySelectorAll('.datepicker'), {
                 format: 'yyyy-mm-dd'
             });
