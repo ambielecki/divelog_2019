@@ -55,6 +55,14 @@ Route::group(['prefix' => '/api'], function () {
         Route::get('/list', 'BlogController@getApiList');
     });
 
+    Route::group(['prefix' => '/blog'], function () {
+        Route::get('/list', 'DiveLogController@getApiList');
+        Route::get('/create', 'DiveLogController@getApiCreate');
+        Route::get('/edit/{dive_number}', 'DiveLogController@getApiEdit');
+
+        Route::post('/user', 'DiveLogController@postApiUser');
+    });
+
     // admin api routes
     Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
         // admin image api routes
