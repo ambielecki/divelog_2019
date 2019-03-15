@@ -16,7 +16,7 @@
                         @endif
 
                         <form action="{{ route('admin_home_edit') }}" method="POST">
-                            {{ csrf_field() }}
+                            @csrf
                             <input type="hidden" name="id" value="{{ $current_page->id }}">
 
                             <div class="row">

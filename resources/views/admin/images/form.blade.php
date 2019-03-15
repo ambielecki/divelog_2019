@@ -1,5 +1,5 @@
 <form class="col s12" action="{{ $route }}" method="POST" enctype="multipart/form-data">
-    {{ csrf_field() }}
+    @csrf
 
     <div class="row">
         @if (!$image->file_name)

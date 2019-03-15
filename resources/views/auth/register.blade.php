@@ -12,7 +12,7 @@
                     <span class="card-title">Register</span>
                     <div class="row">
                         <form class="col s12" action="{{ route('register') }}" method="POST">
-                            {{ csrf_field() }}
+                            @csrf
 
                             <div class="row">
                                 <div class="input-field col s12 m6">

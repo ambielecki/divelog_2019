@@ -13,11 +13,18 @@
         </a>
 
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            {{ csrf_field() }}
+            @csrf
         </form>
     </li>
     <li><a href="#">Settings</a></li>
 </ul>
+
+@auth
+    <ul id="dive_log_dropdown" class="dropdown-content text-blue">
+        <li><a href="{{ route('dive_log_list') }}">View Dives</a></li>
+        <li><a href="{{ route('dive_log_create') }}">Log Dive</a></li>
+    </ul>
+@endauth
 
 @admin
     <ul id="admin_dropdown" class="dropdown-content text-blue">
@@ -37,10 +44,15 @@
                     <a href="#" data-target="mobile_nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="{{ route('calculator') }}">Calculator</a></li>
-                        <li><a href="#">Dive Log</a></li>
+                        @auth
+                            <li><a class="dropdown-trigger" href="#!" data-target="dive_log_dropdown">Dive Log<i class="material-icons right">arrow_drop_down</i></a></li>
+                        @endauth
+                        @guest
+                            <li><a href="{{ route('dive_log_list') }}">Dive Log</a></li>
+                        @endguest
                         <li><a href="{{ route('blog_list') }}">Blog</a></li>
                         @admin
-                        <li><a class="dropdown-trigger" href="#!" data-target="admin_dropdown">Admin<i class="material-icons right">arrow_drop_down</i></a></li>
+                            <li><a class="dropdown-trigger" href="#!" data-target="admin_dropdown">Admin<i class="material-icons right">arrow_drop_down</i></a></li>
                         @endadmin
                         @if (Auth::check())
                             <li><a class="dropdown-trigger" href="#!" data-target="logout_dropdown">Welcome {{ auth()->user()->first_name }}<i class="material-icons right">arrow_drop_down</i></a></li>
@@ -57,7 +69,22 @@
 {{-- Mobile Nav --}}
 <ul class="sidenav" id="mobile_nav">
     <li><a href="{{ route('calculator') }}">Calculator</a></li>
-    <li><a href="#">Dive Log</a></li>
+    @auth
+        <ul class="collapsible" data-collapsible="accordian">
+            <li>
+                <div class="collapsible-header black-text">Dive Log</div>
+                <div class="collapsible-body side_nav_collapse">
+                    <ul>
+                        <li><a href="{{ route('dive_log_list') }}">View Dives</a></li>
+                        <li><a href="{{ route('dive_log_create') }}">Log Dive</a></li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    @endauth
+    @guest
+        <li><a href="{{ route('dive_log_list') }}">Dive Log</a></li>
+    @endguest
     <li><a href="{{ route('blog_list') }}">Blog</a></li>
     @admin
         <ul class="collapsible" data-collapsible="accordian">
@@ -86,7 +113,7 @@
                                 Log Out
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
+                                @csrf
                             </form>
                         </li>
                         <li><a href="#">Settings</a></li>

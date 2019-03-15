@@ -22,7 +22,7 @@
         </a>
 
         <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-            {{ csrf_field() }}
+            @csrf
         </form>
     </li>
     <li><a href="#">Settings</a></li>
@@ -88,7 +88,7 @@
                                 Log Out
                             </a>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                {{ csrf_field() }}
+                                @csrf
                             </form>
                         </li>
                         <li><a href="#">Settings</a></li>

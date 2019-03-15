@@ -5,7 +5,7 @@
                 <span class="card-title">{{ $title }}</span>
                 <div class="row">
                     <form class="col s12" action="{{ $route }}" method="POST">
-                        {{ csrf_field() }}
+                        @csrf
 
                         <div class="row">
                             <div class="input-field col s12">

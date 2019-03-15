@@ -11,6 +11,14 @@ Route::group(['prefix' => '/blog'], function () {
     Route::get('/{slug}', 'BlogController@getView')->name('blog_view');
 });
 
+Route::group(['prefix' => '/dive-log'], function () {
+    // Really just for the name, all will be handle by vue
+    Route::get('/', 'DiveLogController@getApp')->name('dive_log_list');
+    Route::get('/create', 'DiveLogController@getApp')->name('dive_log_create');
+    Route::get('/edit/{dive_number}', 'DiveLogController@getEdit')->name('dive_log_edit');
+    Route::fallback('DiveLogController@getApp');
+});
+
 Route::group(['prefix' => '/admin', 'middleware' => ['admin']], function () {
     Route::get('/', 'AdminController@getIndex')->name('admin');
 
