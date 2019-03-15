@@ -19,7 +19,7 @@
         props: ['page', 'pages'],
         methods: {
             getPage(event) {
-                this.$emit('page_clicked', event.currentTarget.dataset.page);
+                this.$emit('page_clicked', parseInt(event.currentTarget.dataset.page));
             },
         },
     }

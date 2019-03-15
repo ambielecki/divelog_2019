@@ -79,37 +79,52 @@ window.DiveLogRepeat = {
         });
     },
 
-    initSidenav: (options = {}) => {
-        let nav = document.querySelectorAll('.sidenav');
+    initSidenav: (nav = null, options = {}) => {
+        if (!nav) {
+            document.querySelectorAll('.sidenav');
+        }
+
         Materialize.Sidenav.init(nav, options);
     },
 
-    initDropdown: (options = {}) => {
-        let dropdowns = document.querySelectorAll('.dropdown-trigger');
+    initDropdown: (dropdowns = null, options = {}) => {
+        if (!dropdowns) {
+            dropdowns = document.querySelectorAll('.dropdown-trigger');
+        }
+
         Materialize.Dropdown.init(dropdowns, options);
     },
 
-    initCollapsible: (options = {}) => {
-        let collapsible = document.querySelectorAll('.collapsible');
+    initCollapsible: (collapsible = null, options = {}) => {
+        if (!collapsible) {
+            collapsible = document.querySelectorAll('.collapsible');
+        }
+
         Materialize.Collapsible.init(collapsible, options);
     },
 
-    initCarousel: (options = {}) => {
-        let carousel = document.querySelectorAll('.carousel');
+    initCarousel: (carousel = null, options = {}) => {
+        if (!carousel) {
+            carousel = document.querySelectorAll('.carousel');
+        }
+
         Materialize.Carousel.init(carousel, options);
     },
 
-    initSelects: (options = {}) => {
-        let selects = document.querySelectorAll('.material_select');
+    initSelects: (selects = null, options = {}) => {
+        if (!selects) {
+            selects = document.querySelectorAll('.material_select');
+        }
+
         Materialize.FormSelect.init(selects, options);
     },
 
-    initMaterialBox: (elems = null, options = {}) => {
-        if (!elems) {
-            elems = document.querySelectorAll('.materialboxed');
-            console.log(elems);
+    initMaterialBox: (elements = null, options = {}) => {
+        if (!elements) {
+            elements = document.querySelectorAll('.materialboxed');
         }
-        Materialize.Materialbox.init(elems, options);
+
+        Materialize.Materialbox.init(elements, options);
 
     },
 
@@ -159,7 +174,7 @@ document.addEventListener('DOMContentLoaded', function() {
     DiveLogRepeat.initSidenav();
     DiveLogRepeat.initDropdown();
     DiveLogRepeat.initCollapsible();
-    DiveLogRepeat.initCarousel({
+    DiveLogRepeat.initCarousel(null, {
         fullWidth: true,
         indicators: true
     });

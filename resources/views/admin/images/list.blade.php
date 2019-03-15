@@ -34,6 +34,7 @@
                                 @image_clicked="imageThumbClick"
                             ></image-thumbnail>
                         </div>
+
                         <div v-else-if="images_loading" class="center-align">
                             <div class="preloader-wrapper big active">
                                 <div class="spinner-layer spinner-blue-only">
@@ -47,6 +48,7 @@
                                 </div>
                             </div>
                         </div>
+
                         <div v-else>
                             <b>There were no images matching your search criteria.</b>
                         </div>

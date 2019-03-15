@@ -20,11 +20,21 @@
                     </div>
                 </div>
             </div>
+
             <div v-else-if="posts.length > 0"><blog-item  v-for="post in posts" :post="post"></blog-item></div>
+
             <div v-else class="card col s12">
                 <div class="card-content">
                     <span class="card-title">No Posts Found</span>
                     <p>Please come back soon for exciting content!</p>
+                </div>
+            </div>
+
+            <div v-if="pages > 1">
+                <div class="card col s12">
+                    <div class="card-content">
+                        <page-list :page="page" :pages="pages" :links="false" @page_clicked="paginationClick"></page-list>
+                    </div>
                 </div>
             </div>
         </div>

@@ -64,7 +64,7 @@ class BlogController extends Controller {
 
         return response()->json([
             'posts' => $posts,
-            'page'  => $page,
+            'page'  => (int) $page,
             'pages' => ceil($count / $limit),
             'count' => $count,
         ]);
