@@ -3,7 +3,7 @@ Vue.use(VueRouter);
 const dive_log = Vue.component('dive-log', require('../../components/pages/DiveLog').default);
 
 const routes = [
-    {path: '/dive-log/create', component: dive_log},
+    {path: '/dive-log/create', component: dive_log, props: {user: 'Fred'}},
 ];
 
 const router = new VueRouter({

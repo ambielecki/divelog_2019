@@ -15,7 +15,7 @@
 
             <div class="row">
                 <div class="col sm12">
-                    <p>Good to see you</p>
+                    <p>Good to see you {{ user ? user : 'No User Defined' }}</p>
                 </div>
             </div>
         </div>
@@ -24,10 +24,21 @@
 
 <script>
     export default {
+        props: {
+            user: {
+                default: null,
+            },
+        },
         data() {
             return {
                 show_post: false,
             }
         },
+        methods: {
+
+        },
+        updated() {
+
+        }
     }
 </script>
