@@ -7,22 +7,33 @@
                         <span class="card-title blue-text">General Info</span>
                         <div class="row">
                             <div class="input-field col s12">
+                                <input id="dive_number" name="dive_number" type="text" v-model="dive_log.dive_number">
+                                <label for="dive_number">Dive Number: </label>
+                            </div>
+
+                            <div class="input-field col s12">
                                 <input id="location" name="location" type="text" v-model="dive_log.location">
                                 <label for="location">Location: </label>
                             </div>
-                        </div>
 
-                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="date" name="date" type="text" class="datepicker" v-model="dive_log.date">
+                                <label for="date">Date: </label>
+                            </div>
+
                             <div class="input-field col s12">
                                 <input id="dive_site" name="dive_site" type="text" v-model="dive_log.dive_site">
                                 <label for="dive_site">Dive Site: </label>
                             </div>
-                        </div>
 
-                        <div class="row">
                             <div class="input-field col s12">
                                 <input id="description" name="description" type="text" v-model="dive_log.description">
                                 <label for="description">Description: </label>
+                            </div>
+
+                            <div class="input-field col s12">
+                                <textarea id="notes" name="notes" type="text" class="materialize-textarea" v-model="dive_log.notes"></textarea>
+                                <label for="notes">Notes: </label>
                             </div>
                         </div>
                     </div>
@@ -59,13 +70,33 @@
             }
         },
         methods: {
+            getCreate: function () {
+                Axios.post('/api/dive-log/create', {
 
+                }).then(function (response) {
+                    app.user = response.data.user;
+                    app.dive_number = response.data.dive_number
+                }).catch(function (error) {
+                    console.log(error);
+                });
+            },
         },
         updated() {
 
         },
         mounted() {
+            this.getCreate();
+            Materialize.Datepicker.init(document.querySelectorAll('.datepicker'), {
+                format: 'yyyy-mm-dd'
+            });
 
-        }
+            Materialize.updateTextFields();
+            Materialize.textareaAutoResize(document.querySelector('#notes'));
+
+
+            if (this.$router.currentRoute.path === '/dive-log/create') {
+                console.log('Yay');
+            }
+        },
     }
 </script>
