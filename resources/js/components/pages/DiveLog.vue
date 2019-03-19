@@ -74,7 +74,12 @@
 
                             <div class="input-field col s6">
                                 <input id="bottom_time" name="dive_details[bottom_time]" type="text" v-model="dive_log.dive_details.bottom_time" :readonly="compute_bottom_time">
-                                <label for="bottom_time">Bottom Time: </label>
+                                <label for="bottom_time">Bottom Time (min): </label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <input id="max_depth" name="dive_details[max_depth]" type="text" v-model="dive_log.dive_details.max_depth">
+                                <label for="max_depth">Max Depth (ft): </label>
                             </div>
 
                             <div class="input-field col s6">
@@ -112,6 +117,7 @@
                         previous_pg: '',
                         surface_interval: '',
                         bottom_time: '',
+                        max_depth: '',
                         time_in: '',
                         time_out: '',
                         pressure_group: '',
