@@ -6,23 +6,23 @@
                     <div class="card-content">
                         <span class="card-title blue-text">General Info</span>
                         <div class="row">
-                            <div class="input-field col s12 m6">
+                            <div class="input-field col s6">
                                 <input id="dive_number" name="dive_number" type="text" v-model="dive_log.dive_number">
                                 <label for="dive_number">Dive Number: </label>
                             </div>
 
-                            <div class="input-field col s12 m6">
+                            <div class="input-field col s6">
                                 <input id="location" name="location" type="text" v-model="dive_log.location">
                                 <label for="location">Location: </label>
                             </div>
 
-                            <div class="input-field col s12 m6">
+                            <div class="input-field col s6">
                                 <input id="dive_site" name="dive_site" type="text" v-model="dive_log.dive_site">
                                 <label for="dive_site">Dive Site: </label>
                             </div>
 
-                            <div class="input-field col s12 m6">
-                                <input id="date" name="date" type="text" class="datepicker" v-model="dive_log.date">
+                            <div class="input-field col s6">
+                                <input id="date" name="date" type="text" class="datepicker" v-model="dive_log.date" @change="updatePicker($event, 'date')">
                                 <label for="date">Date: </label>
                             </div>
 
@@ -45,14 +45,45 @@
                     <div class="card-content">
                         <span class="card-title blue-text">Calculations</span>
                         <div class="row">
-                            <div class="input-field col s12 m6">
-                                <input id="dive_details_time_in" name="dive_details[time_in]" type="text" class="timepicker" v-model="dive_log.dive_details.time_in">
+                            <div class="input-field col s6">
+                                <input id="previous_pg" name="dive_details[starting_pg]" type="text" v-model="dive_log.dive_details.previous_pg"">
+                                <label for="previous_pg">Previous PG: </label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <input id="surface_interval" name="dive_details[surface_interval]" type="text" v-model="dive_log.dive_details.surface_interval"">
+                                <label for="surface_interval">Surface Interval: </label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <input id="dive_details_time_in" name="dive_details[time_in]" type="text" class="timepicker" v-model="dive_log.dive_details.time_in" @change="updatePicker($event, 'time_in')">
                                 <label for="dive_details_time_in">Time In: </label>
                             </div>
 
-                            <div class="input-field col s12 m6">
-                                <input id="dive_details_time_out" name="dive_details[time_out]" type="text" class="timepicker" v-model="dive_log.dive_details.time_out">
+                            <div class="input-field col s6">
+                                <input id="dive_details_time_out" name="dive_details[time_out]" type="text" class="timepicker" v-model="dive_log.dive_details.time_out" @change="updatePicker($event, 'time_out')">
                                 <label for="dive_details_time_out">Time Out: </label>
+                            </div>
+
+                            <div class="col s6">
+                                <label>
+                                    <input type="checkbox" v-model="compute_bottom_time">
+                                    <span>Compute Bottom Time?</span>
+                                </label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <input id="bottom_time" name="dive_details[bottom_time]" type="text" v-model="dive_log.dive_details.bottom_time" :readonly="compute_bottom_time">
+                                <label for="bottom_time">Bottom Time: </label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <input id="pressure_group" name="dive_details[pressure_group]" type="text" v-model="dive_log.dive_details.pressure_group">
+                                <label for="pressure_group">End Pressure Group: </label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <button id="calculate_btn" class="btn" @click="calculateDive($event)">Calculate</button>
                             </div>
                         </div>
                     </div>
@@ -67,10 +98,10 @@
         data() {
             return {
                 user: {},
+                compute_bottom_time: true,
                 show_post: false,
+                update_text: false,
                 dive_log: {
-                    computed_time_in: '',
-                    computed_time_out: '',
                     date: '',
                     description: '',
                     dive_number: '',
@@ -78,14 +109,16 @@
                     location: '',
                     notes: '',
                     dive_details: {
+                        previous_pg: '',
+                        surface_interval: '',
                         bottom_time: '',
                         time_in: '',
                         time_out: '',
+                        pressure_group: '',
                     },
                     equipment_details: {
 
                     },
-                    update_text: false,
                 },
             }
         },
@@ -103,6 +136,7 @@
                     console.log(error);
                 });
             },
+
             checkUser() {
                 let log = this;
                 Axios.post('/api/dive-log/user', {
@@ -114,7 +148,37 @@
                     console.log(error);
                 });
             },
+
+            updatePicker(event, target) {
+                let value = event.target.value;
+                switch (target) {
+                    case 'date':
+                        this.dive_log.date = value;
+                        break;
+                    case 'time_in':
+                        this.dive_log.dive_details.time_in = value;
+                        break;
+                    case 'time_out':
+                        this.dive_log.dive_details.time_out = value;
+                        break;
+                }
+            },
+
+            calculateBottomTime() {
+                if (this.computed_time_in && this.computed_time_out) {
+                    this.update_text = true;
+                    let time_in = Moment(this.computed_time_in, 'HH:mm A');
+                    let time_out = Moment(this.computed_time_out, 'HH:mm A');
+                    this.dive_log.dive_details.bottom_time = time_out.diff(time_in) / (60 * 1000).toString();
+                }
+            },
+
+            calculateDive(event) {
+                event.preventDefault();
+                console.log('fred');
+            },
         },
+
         updated() {
             if (this.update_text) {
                 Materialize.updateTextFields();
@@ -123,11 +187,11 @@
         },
         mounted() {
             this.checkUser();
-            Materialize.Datepicker.init(document.querySelectorAll('.datepicker'), {
+            let datepickers = Materialize.Datepicker.init(document.querySelectorAll('.datepicker'), {
                 format: 'yyyy-mm-dd'
             });
 
-            Materialize.Timepicker.init(document.querySelectorAll('.timepicker'), {});
+            let timepickers = Materialize.Timepicker.init(document.querySelectorAll('.timepicker'), {});
 
             Materialize.updateTextFields();
             Materialize.textareaAutoResize(document.querySelector('#notes'));
@@ -146,7 +210,15 @@
         },
         watch: {
             computed_time_in() {
-                this.dive_log.dive_details.bottom_time = this.dive_log.dive_details.time_in;
+                if (this.compute_bottom_time) {
+                    this.calculateBottomTime();
+                }
+            },
+
+            computed_time_out() {
+                if (this.compute_bottom_time) {
+                    this.calculateBottomTime();
+                }
             }
         }
     }
