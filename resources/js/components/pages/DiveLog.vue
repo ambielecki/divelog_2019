@@ -67,22 +67,24 @@
         },
         methods: {
             getCreate() {
+                let log = this;
                 Axios.get('/api/dive-log/create', {
                     params: {
-                        user: user.id ? user.id : null,
+                        user: log.user.id ? log.user.id : null,
                     },
                 }).then(function (response) {
-                    this.dive_number = response.data.dive_number;
+                    log.dive_log.dive_number = response.data.dive_number;
                 }).catch(function (error) {
                     console.log(error);
                 });
             },
             checkUser() {
+                let log = this;
                 Axios.post('/api/dive-log/user', {
 
                 }).then(function (response) {
-                    this.user = response.data.user;
-                    this.getCreate();
+                    log.user = response.data.user;
+                    log.getCreate();
                 }).catch(function (error) {
                     console.log(error);
                 });

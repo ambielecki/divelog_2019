@@ -15,6 +15,6 @@ let app = new Vue({
     el: '#log_app',
     router,
     mounted() {
-        this.checkUser();
+        // this.checkUser();
     },
 });
