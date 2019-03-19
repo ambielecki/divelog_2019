@@ -56,6 +56,13 @@
                             </div>
 
                             <div class="input-field col s6">
+                                <input id="post_si_pg" name="dive_details[post_si_pg]" type="text" v-model="dive_log.dive_details.post_si_pg" readonly>
+                                <label for="post_si_pg">Post SI PG: </label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s6">
                                 <input id="dive_details_time_in" name="dive_details[time_in]" type="text" class="timepicker" v-model="dive_log.dive_details.time_in" @change="updatePicker($event, 'time_in')">
                                 <label for="dive_details_time_in">Time In: </label>
                             </div>
@@ -83,7 +90,7 @@
                             </div>
 
                             <div class="input-field col s6">
-                                <input id="pressure_group" name="dive_details[pressure_group]" type="text" v-model="dive_log.dive_details.pressure_group">
+                                <input id="pressure_group" name="dive_details[pressure_group]" type="text" v-model="dive_log.dive_details.pressure_group" readonly>
                                 <label for="pressure_group">End Pressure Group: </label>
                             </div>
 
@@ -121,6 +128,7 @@
                         time_in: '',
                         time_out: '',
                         pressure_group: '',
+                        post_si_pg: '',
                     },
                     equipment_details: {
 
@@ -180,8 +188,28 @@
             },
 
             calculateDive(event) {
+                let app = this;
+                let log = app.dive_log;
+                Axios.get('/api/calculator', {
+                    params: {
+                        dive_1_depth: log.dive_details.previous_pg ? '' : log.dive_details.max_depth,
+                        dive_1_time: log.dive_details.previous_pg ? '' : log.dive_details.bottom_time,
+                        surface_interval: log.dive_details.surface_interval,
+                        previous_pg: log.dive_details.previous_pg,
+                        dive_2_depth: log.dive_details.previous_pg ? log.dive_details.max_depth : '',
+                        dive_2_time: log.dive_details.previous_pg ? log.dive_details.bottom_time : '',
+                    },
+                })
+                    .then(function (response) {
+                        app.update_text = true;
+                        log.dive_details.pressure_group = response.data.dive_2_pg || response.data.dive_1_pg;
+                        log.dive_details.post_si_pg = response.data.post_si_pg;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+
                 event.preventDefault();
-                console.log('fred');
             },
         },
 

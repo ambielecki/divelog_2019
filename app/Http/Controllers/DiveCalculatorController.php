@@ -35,6 +35,7 @@ class DiveCalculatorController extends Controller {
         $surface_interval = $request->input('surface_interval');
         $dive_2_depth = $request->input('dive_2_depth');
         $dive_2_time = $request->input('dive_2_time');
+        $dive_1_pg = $request->input('previous_pg') ?? null;
 
         $continue = true;
         $calculator = new DiveCalculator();
