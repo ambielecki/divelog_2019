@@ -56,7 +56,7 @@
                             </div>
 
                             <div class="input-field col s6">
-                                <input id="post_si_pg" name="dive_details[post_si_pg]" type="text" v-model="dive_log.dive_details.post_si_pg" readonly>
+                                <input id="post_si_pg" name="dive_details[post_si_pg]" type="text" v-model="dive_log.dive_details.post_si_pg">
                                 <label for="post_si_pg">Post SI PG: </label>
                             </div>
                         </div>
@@ -90,7 +90,7 @@
                             </div>
 
                             <div class="input-field col s6">
-                                <input id="pressure_group" name="dive_details[pressure_group]" type="text" v-model="dive_log.dive_details.pressure_group" readonly>
+                                <input id="pressure_group" name="dive_details[pressure_group]" type="text" v-model="dive_log.dive_details.pressure_group">
                                 <label for="pressure_group">End Pressure Group: </label>
                             </div>
 
@@ -157,7 +157,9 @@
 
                 }).then(function (response) {
                     log.user = response.data.user;
-                    log.getCreate();
+                    if (this.$router.currentRoute.path === '/dive-log/create') {
+                        log.getCreate();
+                    }
                 }).catch(function (error) {
                     console.log(error);
                 });
@@ -229,10 +231,6 @@
 
             Materialize.updateTextFields();
             Materialize.textareaAutoResize(document.querySelector('#notes'));
-
-            if (this.$router.currentRoute.path === '/dive-log/create') {
-
-            }
         },
         computed: {
             computed_time_in() {
