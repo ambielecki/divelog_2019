@@ -137,12 +137,10 @@
             }
         },
         methods: {
-            getCreate() {
+            getNextDiveNumber() {
                 let log = this;
-                Axios.get('/api/dive-log/create', {
-                    params: {
-                        user: log.user.id ? log.user.id : null,
-                    },
+                Axios.post('/api/dive-log/next-dive', {
+                    user: log.user.id ? log.user.id : null,
                 }).then(function (response) {
                     log.dive_log.dive_number = response.data.dive_number;
                     log.update_text = true;
@@ -157,8 +155,8 @@
 
                 }).then(function (response) {
                     log.user = response.data.user;
-                    if (this.$router.currentRoute.path === '/dive-log/create') {
-                        log.getCreate();
+                    if (log.$router.currentRoute.path === '/dive-log/create') {
+                        log.getNextDiveNumber();
                     }
                 }).catch(function (error) {
                     console.log(error);

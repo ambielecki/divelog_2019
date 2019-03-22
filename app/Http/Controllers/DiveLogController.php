@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DiveLog;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
-class DiveLogController extends Controller
-{
+class DiveLogController extends Controller {
     public function getApp(): View {
         return view('main.dive_log.app');
     }
@@ -16,17 +16,27 @@ class DiveLogController extends Controller
         return response()->json();
     }
 
-    public function getApiCreate(): JsonResponse {
+    public function postNextDive(): JsonResponse {
+        if (auth()->user()) {
+            $dive_number = DiveLog::query()
+                ->where([
+                    ['user_id', auth()->user()->id],
+                ])
+                ->max('dive_number');
+        } else {
+            $dive_number = 0;
+        }
+
         return response()->json([
-            'dive_number' => 1,
+            'dive_number' => $dive_number + 1,
         ]);
     }
 
-    public function postApiCreate($id): JsonResponse {
+    public function postApiCreate(): JsonResponse {
         return response()->json();
     }
 
-    public function getApiEdit($id): JsonResponse {
+    public function postApiEditInfo($id): JsonResponse {
         return response()->json();
     }
 
@@ -36,7 +46,7 @@ class DiveLogController extends Controller
 
     public function postApiUser(): JsonResponse {
         return response()->json([
-            'user' => auth()->user(),
+            'user' => auth()->user() ?? (object) [],
         ]);
     }
 }

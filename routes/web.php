@@ -57,10 +57,10 @@ Route::group(['prefix' => '/api'], function () {
 
     Route::group(['prefix' => '/dive-log'], function () {
         Route::get('/list', 'DiveLogController@getApiList');
-        Route::get('/create', 'DiveLogController@getApiCreate');
-        Route::get('/edit/{dive_number}', 'DiveLogController@getApiEdit');
+        Route::post('/edit-info/{dive_number}', 'DiveLogController@postApiEditInfo');
 
         Route::post('/user', 'DiveLogController@postApiUser');
+        Route::post('/next-dive', 'DiveLogController@postNextDive');
     });
 
     // admin api routes
