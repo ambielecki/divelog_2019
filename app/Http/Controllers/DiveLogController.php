@@ -32,7 +32,9 @@ class DiveLogController extends Controller {
         ]);
     }
 
-    public function postApiCreate(): JsonResponse {
+    public function postApiCreate(Request $request): JsonResponse {
+        $values = $request->all();
+
         return response()->json();
     }
 
