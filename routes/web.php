@@ -57,10 +57,12 @@ Route::group(['prefix' => '/api'], function () {
 
     Route::group(['prefix' => '/dive-log'], function () {
         Route::get('/list', 'DiveLogController@getApiList');
+
+        // these are essentially get routes using post so we do not have to use query params
         Route::post('/edit-info/{dive_number}', 'DiveLogController@postApiEditInfo');
+        Route::post('/next-dive-info', 'DiveLogController@postApiNextDiveInfo');
 
         Route::post('/user', 'DiveLogController@postApiUser');
-        Route::post('/next-dive', 'DiveLogController@postNextDive');
     });
 
     // admin api routes

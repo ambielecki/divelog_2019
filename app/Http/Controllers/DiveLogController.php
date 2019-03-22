@@ -16,7 +16,7 @@ class DiveLogController extends Controller {
         return response()->json();
     }
 
-    public function postNextDive(): JsonResponse {
+    public function postApiNextDiveInfo(): JsonResponse {
         if (auth()->user()) {
             $dive_number = DiveLog::query()
                 ->where([

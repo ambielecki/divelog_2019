@@ -139,7 +139,7 @@
         methods: {
             getNextDiveNumber() {
                 let log = this;
-                Axios.post('/api/dive-log/next-dive', {
+                Axios.post('/api/dive-log/next-dive-info', {
                     user: log.user.id ? log.user.id : null,
                 }).then(function (response) {
                     log.dive_log.dive_number = response.data.dive_number;
