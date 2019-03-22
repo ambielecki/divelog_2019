@@ -46,12 +46,12 @@
                         <span class="card-title blue-text">Calculations</span>
                         <div class="row">
                             <div class="input-field col s6">
-                                <input id="previous_pg" name="dive_details[starting_pg]" type="text" v-model="dive_log.dive_details.previous_pg"">
+                                <input id="previous_pg" name="dive_details[starting_pg]" type="text" v-model="dive_log.dive_details.previous_pg">
                                 <label for="previous_pg">Previous PG: </label>
                             </div>
 
                             <div class="input-field col s6">
-                                <input id="surface_interval" name="dive_details[surface_interval]" type="text" v-model="dive_log.dive_details.surface_interval"">
+                                <input id="surface_interval" name="dive_details[surface_interval]" type="text" v-model="dive_log.dive_details.surface_interval">
                                 <label for="surface_interval">Surface Interval: </label>
                             </div>
 
@@ -101,6 +101,35 @@
                     </div>
                 </div>
             </div> <!-- End Calculations -->
+
+            <div class="col s12 m6 l4">
+                <div class="card">
+                    <div class="card-content">
+                        <span class="card-title blue-text">Tank Info</span>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="equipment_tank_type" name="equipment_details[tank][type]" type="text" v-model="dive_log.equipment_details.tank.type">
+                                <label for="equipment_tank_type">Tank Type: </label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <input id="equipment_tank_size" name="equipment_details[tank][size]" type="text" v-model="dive_log.equipment_details.tank.size">
+                                <label for="equipment_tank_size">Tank Size: </label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <input id="equipment_tank_start" name="equipment_details[tank][start_pressure]" type="text" v-model="dive_log.equipment_details.tank.start_pressure">
+                                <label for="equipment_tank_start">Start Pressure: </label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <input id="equipment_tank_end" name="equipment_details[tank][end_pressure]" type="text" v-model="dive_log.equipment_details.tank.end_pressure">
+                                <label for="equipment_tank_end">End Pressure: </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> <!-- End Tank Info -->
         </div>
     </form>
 </template>
@@ -131,7 +160,12 @@
                         post_si_pg: '',
                     },
                     equipment_details: {
-
+                        tank: {
+                            type: '',
+                            size: '',
+                            start_pressure: '',
+                            end_pressure: '',
+                        },
                     },
                 },
             }
