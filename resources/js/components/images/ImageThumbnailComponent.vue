@@ -17,6 +17,7 @@
         props: ['image', 'column_size'],
         methods: {
             imageClick() {
+                console.log('click');
                 this.$emit('image_clicked', this.image);
             },
         }

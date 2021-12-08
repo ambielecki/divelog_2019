@@ -44,7 +44,7 @@ class HomeController extends Controller {
 
         return view('admin.home.home', [
             'current_page' => $current_page,
-            'content'      => $current_page->content,
+            'content'      => $current_page->content ?? '',
             'is_current'   => $is_current,
         ]);
     }

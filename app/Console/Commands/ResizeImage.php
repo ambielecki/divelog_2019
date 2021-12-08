@@ -20,7 +20,7 @@ class ResizeImage extends Command {
 
     protected $description = 'Stores various image sizes after upload';
 
-    public function handle(): void {
+    public function handle() {
         $task = Task::find($this->argument('id'));
 
         if (!$task || !isset($task->options['image_id'])) {
@@ -28,7 +28,7 @@ class ResizeImage extends Command {
             $task->save();
             $this->line('Image could not be found, task marked as abandoned');
 
-            return;
+            return 0;
         }
 
         $task->status = Task::STATUS_RUNNING;
@@ -61,6 +61,8 @@ class ResizeImage extends Command {
         }
 
         $task->save();
+
+        return 0;
     }
 
     private function createImage(InterventionImage $image, string $width, string $folder, string $file_name): void {
