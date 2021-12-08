@@ -24,7 +24,7 @@
 <script>
     export default {
         props: {
-            posts: [],
+            posts: Array,
             edit_url: '',
         },
     }
