@@ -4,6 +4,7 @@ namespace App\Models\Pages;
 
 use App\Models\Image;
 use App\Models\Page;
+use App\Models\Pages\BlogPage;
 use App\Scopes\HomePageScope;
 
 class HomePage extends Page {
@@ -38,6 +39,17 @@ class HomePage extends Page {
                 ->toArray();
 
             $content['carousel_images']['images'] = $carousel_images;
+        }
+
+        if (isset($content['blog_posts'])) {
+            $blog_posts = BlogPage::query()
+                ->where('is_active', 1)
+                ->orderBy('updated_at', 'desc')
+                ->limit((int) $content['blog_posts'])
+                ->get()
+                ->toArray();
+
+            $content['blog_posts'] = $blog_posts;
         }
 
         return $content;
